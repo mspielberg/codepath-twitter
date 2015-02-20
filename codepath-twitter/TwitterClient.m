@@ -31,14 +31,15 @@ NSString *const kTwitterBaseUrl = @"https://api.twitter.com";
     return instance;
 }
 
-- (void)beginLoginWithCompletion:(void(^)(NSURL *authURL, NSError *error))completion {
+- (void)beginLoginWithCompletion:(ORNAuthURLCompletion)completion {
     [self fetchRequestTokenWithPath:@"oauth/request_token" method:@"GET" callbackURL:[NSURL URLWithString:@"cptwitterdemo://oauth"] scope:nil success:^(BDBOAuth1Credential *requestToken) {
         NSLog(@"got request token");
         NSURL *authURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/oauth/authorize?oauth_token=%@", requestToken.token]];
-        completion(authURL, nil);
+        ORNLoginCompletion loginCompletion = completion(authURL, nil);
+        self.loginCompletion = loginCompletion;
     } failure:^(NSError *error) {
         NSLog(@"could not get request token");
-        self.loginCompletion(nil, error);
+        completion(nil, error);
     }];
 }
 

@@ -11,7 +11,7 @@
 #import "TimelineViewController.h"
 
 @interface LoginViewController ()
-
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
 @end
 
 @implementation LoginViewController
@@ -19,6 +19,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.title = @"Twitter Login";
+    
+    LoginViewController __weak *lvc = self;
+    [[TwitterClient sharedInstance] beginLoginWithCompletion:^ORNLoginCompletion(NSURL *authURL, NSError *error) {
+        [self.webView loadRequest:[NSURLRequest requestWithURL:authURL]];
+        ORNLoginCompletion completion = ^(User *user, NSError *error) {
+            NSLog(@"Login completed for %@", user);
+            [lvc dismissViewControllerAnimated:YES completion:nil];
+        };
+        return completion;
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,18 +47,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-- (IBAction)onLogin:(id)sender {
-    [[TwitterClient sharedInstance] loginWithCompletion:^(User *user, NSError *error) {
-        if (user) {
-            // Modally present tweets view
-            NSLog(@"Thank you for logging in, %@", user.name);
-            TimelineViewController *tvc = [[TimelineViewController alloc] init];
-            UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:tvc];
-            [self presentViewController:nc animated:YES completion:nil];
-        } else {
-            // Present error view
-        }
-    }];}
 
 @end

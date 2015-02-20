@@ -57,6 +57,7 @@ NSString *const kCurrentUserKey = @"kCurrentUserKey";
     if (_currentUser) {
         NSData *data = [NSJSONSerialization dataWithJSONObject:currentUser.dictionary options:0 error:NULL];
         [[NSUserDefaults standardUserDefaults] setObject:data forKey:kCurrentUserKey];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UserDidLoginNotification object:nil];
     } else {
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kCurrentUserKey];
 

@@ -23,6 +23,7 @@
 		913E775D1A9524990071674A /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 913E775B1A9524990071674A /* TweetCell.m */; };
 		913E775E1A9524990071674A /* TweetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913E775C1A9524990071674A /* TweetCell.xib */; };
 		913E77611A95268D0071674A /* UIImageView+AnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 913E77601A95268D0071674A /* UIImageView+AnimationUtils.m */; };
+		913E77671A95712A0071674A /* ComposeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913E77661A95712A0071674A /* ComposeView.xib */; };
 		F6C4BED2AF57D79EB3C0274D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43A890C12FE260E6CA8B32C4 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +69,7 @@
 		913E775C1A9524990071674A /* TweetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetCell.xib; sourceTree = "<group>"; };
 		913E775F1A95268D0071674A /* UIImageView+AnimationUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AnimationUtils.h"; sourceTree = "<group>"; };
 		913E77601A95268D0071674A /* UIImageView+AnimationUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AnimationUtils.m"; sourceTree = "<group>"; };
+		913E77661A95712A0071674A /* ComposeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComposeView.xib; sourceTree = "<group>"; };
 		F506FACC87C7A68F174E3D62 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +123,7 @@
 		913E77181A941D020071674A /* codepath-twitter */ = {
 			isa = PBXGroup;
 			children = (
+				913E77621A9570F70071674A /* Views */,
 				913E77591A9524860071674A /* TableViewCells */,
 				913E77501A9430FB0071674A /* Categories */,
 				913E77491A94298B0071674A /* Models */,
@@ -213,6 +216,14 @@
 				913E775C1A9524990071674A /* TweetCell.xib */,
 			);
 			name = TableViewCells;
+			sourceTree = "<group>";
+		};
+		913E77621A9570F70071674A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				913E77661A95712A0071674A /* ComposeView.xib */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		9B53C9FD0A124449CA2D4226 /* Pods */ = {
@@ -311,6 +322,7 @@
 				913E77581A951F9A0071674A /* TimelineViewController.xib in Resources */,
 				913E77271A941D020071674A /* Images.xcassets in Resources */,
 				913E77441A9421580071674A /* LoginViewController.xib in Resources */,
+				913E77671A95712A0071674A /* ComposeView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

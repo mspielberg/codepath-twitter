@@ -55,8 +55,8 @@
                     <constraint firstItem="LEC-gC-KIy" firstAttribute="top" secondItem="oSa-WP-bCN" secondAttribute="bottom" constant="4" id="kbe-2D-1Tn"/>
                     <constraint firstItem="pka-ZP-H4c" firstAttribute="leading" secondItem="oSa-WP-bCN" secondAttribute="trailing" constant="8" id="nBI-ht-p1d"/>
                     <constraint firstAttribute="trailing" secondItem="LEC-gC-KIy" secondAttribute="trailing" constant="8" id="shd-gT-kUQ"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ken-Bw-tJo" secondAttribute="bottom" priority="500" constant="8" id="vFX-L9-mvP"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="LEC-gC-KIy" secondAttribute="bottom" priority="500" constant="8" id="vfE-kG-O0e"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ken-Bw-tJo" secondAttribute="bottom" constant="8" id="vFX-L9-mvP"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="LEC-gC-KIy" secondAttribute="bottom" constant="8" id="vfE-kG-O0e"/>
                     <constraint firstItem="ken-Bw-tJo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="wuN-95-SXh"/>
                     <constraint firstItem="pka-ZP-H4c" firstAttribute="top" secondItem="ken-Bw-tJo" secondAttribute="top" id="y55-Wp-yo9"/>
                 </constraints>

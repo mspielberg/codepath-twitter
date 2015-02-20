@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 OrionNet. All rights reserved.
 //
 
+#import "LoginViewController.h"
 #import "TimelineViewController.h"
 #import "TwitterClient.h"
 #import "TweetCell.h"
@@ -15,6 +16,7 @@
 
 @property (nonatomic, strong) NSArray *tweets;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIView *composeView;
 @property (nonatomic) BOOL isMoreTweetsAvailable;
 @property (nonatomic, strong) TweetCell *sizingCell;
 
@@ -27,9 +29,13 @@
     // Do any additional setup after loading the view from its nib.
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onCompose)];
+    
     UINib *tweetCellNib =[UINib nibWithNibName:@"TweetCell" bundle:nil];
     self.sizingCell = [[tweetCellNib instantiateWithOwner:self options:nil] firstObject];
     [self.tableView registerNib:tweetCellNib forCellReuseIdentifier:@"TweetCell"];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidLogin) name:UserDidLoginNotification object:nil];
     
     [self refresh];
 }
@@ -49,15 +55,37 @@
 }
 */
 
+- (void)onDidLogin {
+    [self refresh];
+}
+
 - (void)onLogout {
     NSLog(@"Logout button pushed");
     [User logout];
+    [self refresh];
+}
+
+- (void)onCompose {
+    [self showComposeView];
+}
+
+- (void)showComposeView {
+    [self.view addSubview:self.composeView];
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.composeView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0L]];
+    [self.view layoutSubviews];
+    self.composeView.hidden = false;
 }
 
 - (void)refresh {
-    self.tweets = @[];
-    [self.tableView reloadData];
-    [self loadMoreData];
+    if ([[TwitterClient sharedInstance] isAuthorized]) {
+        self.tweets = @[];
+        [self.tableView reloadData];
+        [self loadMoreData];
+    } else {
+        LoginViewController *lvc = [[LoginViewController alloc] init];
+        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:lvc];
+        [self presentViewController:nc animated:YES completion:nil];
+    }
 }
 
 - (void)loadMoreData {
@@ -97,6 +125,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         NSLog(@"entering heightForRowAtIndexPath");
     Tweet *tweet = self.tweets[indexPath.row];
+    NSLog(@"tweet = %@", tweet);
     self.sizingCell.tweet = tweet;
         NSLog(@"Sizing row %ld with tweet %@", indexPath.row, self.sizingCell.tweet);
     [self.sizingCell layoutSubviews];

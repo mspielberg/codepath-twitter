@@ -24,20 +24,9 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidLogout) name:UserDidLogoutNotification object:nil];
-    
-    User *user = [User currentUser];
-    if (user) {
-        NSLog(@"Using stored user %@", user);
-        TimelineViewController *tvc = [[TimelineViewController alloc] init];
-        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:tvc];
-        self.window.rootViewController = nc;
-    } else {
-        NSLog(@"No stored user");
-        LoginViewController *lvc = [[LoginViewController alloc] init];
-        self.window.rootViewController = lvc;
-    }
-    
+    TimelineViewController *tvc = [[TimelineViewController alloc] init];
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:tvc];
+    self.window.rootViewController = nc;
     
     [self.window makeKeyAndVisible];
     return YES;
