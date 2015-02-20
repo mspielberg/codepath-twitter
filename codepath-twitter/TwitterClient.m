@@ -112,4 +112,12 @@ NSString *const kTwitterBaseUrl = @"https://api.twitter.com";
     }];
 }
 
+- (void)updateStatus:(NSString *)status {
+    [self POST:@"1.1/statuses/update.json" parameters:@{@"status":status} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"done updating status: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"failed to update status: %@", error);
+    }];
+}
+
 @end

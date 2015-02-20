@@ -6,6 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TimelineViewController">
             <connections>
+                <outlet property="charsRemainingLabel" destination="UkD-Fs-O1I" id="BoL-ot-D0n"/>
+                <outlet property="composeTextField" destination="VEm-KB-D6z" id="Lby-Vt-Kiz"/>
                 <outlet property="composeView" destination="ppK-vO-Wr4" id="HHb-cv-SAu"/>
                 <outlet property="tableView" destination="we9-aQ-iA3" id="cyg-5R-LqS"/>
                 <outlet property="view" destination="YGd-St-gjz" id="zyb-de-u28"/>
@@ -24,53 +26,58 @@
                         <outlet property="delegate" destination="-1" id="kHs-dl-hDN"/>
                     </connections>
                 </tableView>
+                <view hidden="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="100" verticalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="ppK-vO-Wr4" userLabel="ComposeView" customClass="ComposeView">
+                    <rect key="frame" x="0.0" y="18" width="600" height="46"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VEm-KB-D6z" customClass="LimitedWidthTextField">
+                            <rect key="frame" x="8" y="8" width="536" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" keyboardType="twitter"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="QiL-Qj-jVC"/>
+                            </connections>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UkD-Fs-O1I">
+                            <rect key="frame" x="515" y="15" width="21" height="14.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="500" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xzR-40-Yeo">
+                            <rect key="frame" x="552" y="8" width="40" height="30"/>
+                            <state key="normal" title="Tweet">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="onTweetButton:" destination="-1" eventType="touchUpInside" id="JLQ-Ob-4Z5"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="xzR-40-Yeo" firstAttribute="leading" secondItem="VEm-KB-D6z" secondAttribute="trailing" constant="8" id="DtK-Qq-Znu"/>
+                        <constraint firstItem="VEm-KB-D6z" firstAttribute="top" secondItem="ppK-vO-Wr4" secondAttribute="top" constant="8" id="H6c-vZ-tf0"/>
+                        <constraint firstAttribute="bottom" secondItem="VEm-KB-D6z" secondAttribute="bottom" constant="8" id="V9J-Iy-MZL"/>
+                        <constraint firstItem="UkD-Fs-O1I" firstAttribute="centerY" secondItem="VEm-KB-D6z" secondAttribute="centerY" id="jDE-IM-ZNg"/>
+                        <constraint firstAttribute="trailing" secondItem="xzR-40-Yeo" secondAttribute="trailing" constant="8" id="tED-HB-SJP"/>
+                        <constraint firstItem="VEm-KB-D6z" firstAttribute="trailing" secondItem="UkD-Fs-O1I" secondAttribute="trailing" constant="8" id="udG-e5-DVQ"/>
+                        <constraint firstItem="VEm-KB-D6z" firstAttribute="leading" secondItem="ppK-vO-Wr4" secondAttribute="leading" constant="8" id="uek-Iv-ytH"/>
+                        <constraint firstItem="VEm-KB-D6z" firstAttribute="top" secondItem="xzR-40-Yeo" secondAttribute="top" id="xCq-us-qtv"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="we9-aQ-iA3" secondAttribute="trailing" id="4uM-dg-0Kg"/>
                 <constraint firstItem="we9-aQ-iA3" firstAttribute="top" secondItem="YGd-St-gjz" secondAttribute="top" id="9eJ-u9-vym"/>
+                <constraint firstAttribute="trailing" secondItem="ppK-vO-Wr4" secondAttribute="trailing" id="RaX-lW-Xry"/>
                 <constraint firstAttribute="bottom" secondItem="we9-aQ-iA3" secondAttribute="bottom" id="aGq-Wm-yYl"/>
+                <constraint firstItem="ppK-vO-Wr4" firstAttribute="bottom" secondItem="YGd-St-gjz" secondAttribute="top" constant="64" placeholder="YES" id="gZk-lZ-vRH"/>
                 <constraint firstItem="we9-aQ-iA3" firstAttribute="leading" secondItem="YGd-St-gjz" secondAttribute="leading" id="uCQ-1h-7Id"/>
+                <constraint firstItem="ppK-vO-Wr4" firstAttribute="leading" secondItem="YGd-St-gjz" secondAttribute="leading" id="vON-E2-jeF"/>
             </constraints>
-            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <nil key="simulatedTopBarMetrics"/>
             <point key="canvasLocation" x="339" y="330"/>
-        </view>
-        <view contentMode="scaleToFill" horizontalCompressionResistancePriority="100" verticalCompressionResistancePriority="100" id="ppK-vO-Wr4" userLabel="ComposeView">
-            <rect key="frame" x="0.0" y="0.0" width="583" height="47"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VEm-KB-D6z" userLabel="Tweet Text">
-                    <rect key="frame" x="8" y="8" width="519" height="31"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UkD-Fs-O1I">
-                    <rect key="frame" x="498" y="16" width="21" height="15"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="500" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xzR-40-Yeo">
-                    <rect key="frame" x="535" y="8" width="40" height="30"/>
-                    <state key="normal" title="Tweet">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-            </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="xzR-40-Yeo" firstAttribute="leading" secondItem="VEm-KB-D6z" secondAttribute="trailing" constant="8" id="DtK-Qq-Znu"/>
-                <constraint firstItem="VEm-KB-D6z" firstAttribute="top" secondItem="ppK-vO-Wr4" secondAttribute="top" constant="8" id="H6c-vZ-tf0"/>
-                <constraint firstAttribute="bottom" secondItem="VEm-KB-D6z" secondAttribute="bottom" constant="8" id="V9J-Iy-MZL"/>
-                <constraint firstItem="UkD-Fs-O1I" firstAttribute="centerY" secondItem="VEm-KB-D6z" secondAttribute="centerY" id="jDE-IM-ZNg"/>
-                <constraint firstAttribute="trailing" secondItem="xzR-40-Yeo" secondAttribute="trailing" constant="8" id="tED-HB-SJP"/>
-                <constraint firstItem="VEm-KB-D6z" firstAttribute="trailing" secondItem="UkD-Fs-O1I" secondAttribute="trailing" constant="8" id="udG-e5-DVQ"/>
-                <constraint firstItem="VEm-KB-D6z" firstAttribute="leading" secondItem="ppK-vO-Wr4" secondAttribute="leading" constant="8" id="uek-Iv-ytH"/>
-                <constraint firstItem="xzR-40-Yeo" firstAttribute="top" secondItem="ppK-vO-Wr4" secondAttribute="top" constant="8" id="zGH-zn-feL"/>
-            </constraints>
-            <nil key="simulatedStatusBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="330.5" y="-31.5"/>
         </view>
     </objects>
 </document>

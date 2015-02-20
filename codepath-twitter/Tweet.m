@@ -45,7 +45,8 @@ NSInteger const kOneDay = kOneHour * 24;
 - (Tweet *)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
-        self.tweetId = [dictionary[@"id"] integerValue];
+        _dictionary = dictionary;
+        self.tweetId = dictionary[@"id"];
         self.creationTime = [[Tweet longDateFormatter] dateFromString:dictionary[@"created_at"]];
         self.user = [[User alloc] initWithDictionary:dictionary[@"user"]];
         self.text = dictionary[@"text"];
@@ -65,7 +66,15 @@ NSInteger const kOneDay = kOneHour * 24;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@: %p; tweetId=%ld, creationTime=%@, user=%@, text=%@>", self.class, self, self.tweetId, self.creationTime, self.user, self.text];
+    return [NSString stringWithFormat:@"<%@: %p; tweetId=%@, creationTime=%@, user=%@, text=%@>", self.class, self, self.tweetId, self.creationTime, self.user, self.text];
 }
 
+- (NSDictionary *)prefsDictionary {
+    return @{
+             @"id": self.tweetId,
+             @"created_at": [[Tweet longDateFormatter] stringFromDate:self.creationTime],
+             @"user": self.user.prefsDictionary,
+             @"text": self.text
+             };
+}
 @end

@@ -35,7 +35,7 @@
 - (void)setTweet:(Tweet *)tweet {
     _tweet = tweet;
     User *user = tweet.user;
-    [self.userImageView setImageWithURL:user.profileImageUrl placeholderImage:nil duration:0.3];
+//    [self.userImageView setImageWithURL:user.profileImageUrl placeholderImage:nil duration:0.3];
     self.nameLabel.text = user.name;
     self.screenNameLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
     self.timeLabel.text = [tweet relativeDate];

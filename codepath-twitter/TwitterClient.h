@@ -20,4 +20,6 @@ typedef ORNLoginCompletion(^ORNAuthURLCompletion)(NSURL *authURL, NSError *error
 - (void)loginWithCompletion:(void(^)(User *user, NSError *error))completion;
 - (void)handleOpenUrl:(NSURL *)url;
 - (void)homeTimelineFromStartId:(NSNumber *)startId completion:(void(^)(NSArray *tweets, NSError *error))completion;
+- (void)updateStatus:(NSString *)status;
+
 @end

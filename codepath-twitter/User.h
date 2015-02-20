@@ -19,6 +19,7 @@ extern NSString *const UserDidLogoutNotification;
 @property (nonatomic, strong) NSString *userDescription;
 
 - (User *)initWithDictionary:(NSDictionary *)dictionary;
+- (NSDictionary *)prefsDictionary;
 
 + (User *)currentUser;
 + (void)setCurrentUser:(User *)currentUser;

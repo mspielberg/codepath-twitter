@@ -36,6 +36,15 @@ NSString *const UserDidLogoutNotification = @"UserDidLogoutNotification";
     return [NSString stringWithFormat:@"<%@: %p; name=%@, screenName=%@, profileImageUrl=%@, userDescription=%@>", self.class, self, self.name, self.screenName, self.profileImageUrl, self.userDescription];
 }
 
+- (NSDictionary *)prefsDictionary {
+    return @{
+             @"name": self.name,
+             @"screen_name": self.screenName,
+             @"profile_image_url": self.profileImageUrl.absoluteString,
+             @"description": self.userDescription
+             };
+}
+
 static User *_currentUser;
 
 NSString *const kCurrentUserKey = @"kCurrentUserKey";
