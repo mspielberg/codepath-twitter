@@ -112,8 +112,8 @@ NSString *const kTwitterBaseUrl = @"https://api.twitter.com";
     }];
 }
 
-- (void)updateStatus:(NSString *)status {
-    [self POST:@"1.1/statuses/update.json" parameters:@{@"status":status} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+- (void)updateStatus:(NSString *)status asReplyToTweetId:(NSNumber *)tweetId {
+    [self POST:@"1.1/statuses/update.json" parameters:@{@"status":status, @"in_reply_to_status_id":tweetId} success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"done updating status: %@", responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"failed to update status: %@", error);

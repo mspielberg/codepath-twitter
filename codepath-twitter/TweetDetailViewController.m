@@ -41,9 +41,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.title = @"Tweet";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onCompose)];
+    
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.userImageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:8.0]];
     [self.view layoutIfNeeded];
-    [self updateSubviews];
+
+    // ensure subviews are updated
+    self.tweet = self.tweet;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,31 +68,53 @@
 */
 
 - (void)setTweet:(Tweet *)tweet {
+    [_tweet removeObserver:self forKeyPath:@"favorited"];
+    [_tweet removeObserver:self forKeyPath:@"favoriteCount"];
+    [_tweet removeObserver:self forKeyPath:@"retweeted"];
+    [_tweet removeObserver:self forKeyPath:@"retweetCount"];
+    [tweet addObserver:self forKeyPath:@"favorited" options:NSKeyValueObservingOptionInitial context:nil];
+    [tweet addObserver:self forKeyPath:@"favoriteCount" options:NSKeyValueObservingOptionInitial context:nil];
+    [tweet addObserver:self forKeyPath:@"retweeted" options:NSKeyValueObservingOptionInitial context:nil];
+    [tweet addObserver:self forKeyPath:@"retweetCount" options:NSKeyValueObservingOptionInitial context:nil];
     _tweet = tweet;
-    [self updateSubviews];
-}
-
-- (void)updateSubviews {
+    
     self.userNameLabel.text = self.tweet.user.name;
     self.screenNameLabel.text = [NSString stringWithFormat:@"@%@", self.tweet.user.screenName];
     [self.userImageView setImageWithURL:self.tweet.user.profileImageUrl placeholderImage:nil duration:0.0];
     self.tweetTextLabel.text = self.tweet.text;
     self.dateLabel.text = [[self.class dateFormatter] stringFromDate:self.tweet.creationTime];
-    
-    if (self.tweet.isFavorited) {
-        [self.favoriteButton setImage:[UIImage imageNamed:@"favorite_on"] forState:UIControlStateNormal];
-    } else {
-        [self.favoriteButton setImage:[UIImage imageNamed:@"favorite"] forState:UIControlStateNormal];
+}
+
+- (void)dealloc {
+    [_tweet removeObserver:self forKeyPath:@"favorited"];
+    [_tweet removeObserver:self forKeyPath:@"favoriteCount"];
+    [_tweet removeObserver:self forKeyPath:@"retweeted"];
+    [_tweet removeObserver:self forKeyPath:@"retweetCount"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"favorited"]) {
+        if (self.tweet.isFavorited) {
+            [self.favoriteButton setImage:[UIImage imageNamed:@"favorite_on"] forState:UIControlStateNormal];
+        } else {
+            [self.favoriteButton setImage:[UIImage imageNamed:@"favorite"] forState:UIControlStateNormal];
+        }
+    } else if ([keyPath isEqualToString:@"favoriteCount"]) {
+        self.favoriteCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.favoriteCount];
+    } else if ([keyPath isEqualToString:@"retweeted"]) {
+        if (self.tweet.isRetweeted) {
+            [self.retweetButton setImage:[UIImage imageNamed:@"retweet_on"] forState:UIControlStateNormal];
+        } else {
+            [self.retweetButton setImage:[UIImage imageNamed:@"retweet"] forState:UIControlStateNormal];
+        }
+    } else if ([keyPath isEqualToString:@"retweetCount"]) {
+        self.retweetCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.retweetCount];
     }
-    
-    if (self.tweet.isRetweeted) {
-        [self.retweetButton setImage:[UIImage imageNamed:@"retweet_on"] forState:UIControlStateNormal];
-    } else {
-        [self.retweetButton setImage:[UIImage imageNamed:@"retweet"] forState:UIControlStateNormal];
-    }
-    
-    self.favoriteCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.favoriteCount];
-    self.retweetCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.retweetCount];
+}
+
+- (void)onCompose {
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.delegate tweetDetailViewControllerShouldComposeTweet:self];
 }
 
 - (IBAction)onFavorite:(id)sender {
@@ -98,21 +126,15 @@
     }
     
     [[TwitterClient sharedInstance] setAsFavorite:self.tweet.isFavorited withId:self.tweet.tweetId];
-    
-    [self updateSubviews];
+}
+
+- (IBAction)onReply:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.delegate tweetDetailViewControllerShouldComposeReply:self toTweet:self.tweet];
 }
 
 - (IBAction)onRetweet:(id)sender {
-    self.tweet.retweeted = !self.tweet.isRetweeted;
-    if (self.tweet.isRetweeted) {
-        self.tweet.retweetCount += 1;
-    } else {
-        self.tweet.retweetCount -= 1;
-    }
-    
-    [[TwitterClient sharedInstance] setAsFavorite:self.tweet.isFavorited withId:self.tweet.tweetId];
-    
-    [self updateSubviews];
+    NSLog(@"onRetweet");
 }
 
 @end

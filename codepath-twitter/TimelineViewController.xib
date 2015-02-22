@@ -29,7 +29,7 @@
                 <view hidden="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="100" verticalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="ppK-vO-Wr4" userLabel="ComposeView" customClass="ComposeView">
                     <rect key="frame" x="0.0" y="18" width="600" height="46"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VEm-KB-D6z" customClass="LimitedWidthTextField">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="VEm-KB-D6z" customClass="LimitedWidthTextField">
                             <rect key="frame" x="8" y="8" width="536" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" keyboardType="twitter"/>
@@ -38,7 +38,7 @@
                             </connections>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UkD-Fs-O1I">
-                            <rect key="frame" x="515" y="15" width="21" height="14.5"/>
+                            <rect key="frame" x="491" y="15" width="21" height="14.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
@@ -60,7 +60,7 @@
                         <constraint firstAttribute="bottom" secondItem="VEm-KB-D6z" secondAttribute="bottom" constant="8" id="V9J-Iy-MZL"/>
                         <constraint firstItem="UkD-Fs-O1I" firstAttribute="centerY" secondItem="VEm-KB-D6z" secondAttribute="centerY" id="jDE-IM-ZNg"/>
                         <constraint firstAttribute="trailing" secondItem="xzR-40-Yeo" secondAttribute="trailing" constant="8" id="tED-HB-SJP"/>
-                        <constraint firstItem="VEm-KB-D6z" firstAttribute="trailing" secondItem="UkD-Fs-O1I" secondAttribute="trailing" constant="8" id="udG-e5-DVQ"/>
+                        <constraint firstItem="VEm-KB-D6z" firstAttribute="trailing" secondItem="UkD-Fs-O1I" secondAttribute="trailing" constant="32" id="udG-e5-DVQ"/>
                         <constraint firstItem="VEm-KB-D6z" firstAttribute="leading" secondItem="ppK-vO-Wr4" secondAttribute="leading" constant="8" id="uek-Iv-ytH"/>
                         <constraint firstItem="VEm-KB-D6z" firstAttribute="top" secondItem="xzR-40-Yeo" secondAttribute="top" id="xCq-us-qtv"/>
                     </constraints>

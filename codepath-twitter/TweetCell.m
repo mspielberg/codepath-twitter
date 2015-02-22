@@ -36,6 +36,9 @@
 }
 
 - (void)setTweet:(Tweet *)tweet {
+    [_tweet removeObserver:self forKeyPath:@"favorited"];
+    [_tweet removeObserver:self forKeyPath:@"retweeted"];
+    
     _tweet = tweet;
     User *user = tweet.user;
     [self.userImageView setImageWithURL:user.profileImageUrl placeholderImage:nil duration:0.3];
@@ -44,17 +47,8 @@
     self.timeLabel.text = [tweet relativeDate];
     self.tweetTextLabel.text = tweet.text;
     
-    if (tweet.isFavorited) {
-        [self.favoriteButton setImage:[UIImage imageNamed:@"favorite_on"] forState:UIControlStateNormal];
-    } else {
-        [self.favoriteButton setImage:[UIImage imageNamed:@"favorite"] forState:UIControlStateNormal];
-    }
-    
-    if (tweet.isRetweeted) {
-        [self.retweetButton setImage:[UIImage imageNamed:@"retweet_on"] forState:UIControlStateNormal];
-    } else {
-        [self.retweetButton setImage:[UIImage imageNamed:@"retweet"] forState:UIControlStateNormal];
-    }
+    [tweet addObserver:self forKeyPath:@"favorited" options:NSKeyValueObservingOptionInitial context:nil];
+    [tweet addObserver:self forKeyPath:@"retweeted" options:NSKeyValueObservingOptionInitial context:nil];
 }
 
 - (void)layoutSubviews {
@@ -63,13 +57,32 @@
     self.tweetTextLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tweetTextLabel.frame);
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"favorited"]) {
+        if (self.tweet.isFavorited) {
+            [self.favoriteButton setImage:[UIImage imageNamed:@"favorite_on"] forState:UIControlStateNormal];
+        } else {
+            [self.favoriteButton setImage:[UIImage imageNamed:@"favorite"] forState:UIControlStateNormal];
+        }
+    } else if ([keyPath isEqualToString:@"retweeted"]) {
+        if (self.tweet.isRetweeted) {
+            [self.retweetButton setImage:[UIImage imageNamed:@"retweet_on"] forState:UIControlStateNormal];
+        } else {
+            [self.retweetButton setImage:[UIImage imageNamed:@"retweet"] forState:UIControlStateNormal];
+        }
+    }
+}
+
 - (IBAction)onFavorite:(id)sender {
+    [self.delegate tweetCell:self shouldSetFavorite:!self.tweet.isFavorited ofTweet:self.tweet];
 }
 
 - (IBAction)onReply:(id)sender {
+    [self.delegate tweetCell:self shouldReplyToTweet:self.tweet];
 }
 
 - (IBAction)onRetweet:(id)sender {
+    [self.delegate tweetCell:self shouldRetweetTweet:self.tweet];
 }
 
 @end

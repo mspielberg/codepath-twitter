@@ -18,7 +18,7 @@
 static NSInteger const kComposeLengthLimit = 140;
 static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 
-@interface TimelineViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@interface TimelineViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, TweetCellDelegate, TweetDetailViewControllerDelegate>
 
 @property (nonatomic, strong) NSArray *tweets;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -31,6 +31,8 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 @property (nonatomic, strong) NSLayoutConstraint *composeViewOnscreenConstraint;
 @property (weak, nonatomic) IBOutlet LimitedWidthTextField *composeTextField;
 @property (weak, nonatomic) IBOutlet UILabel *charsRemainingLabel;
+
+@property (nonatomic, strong) NSNumber *replyToTweetId;
 
 @end
 
@@ -58,9 +60,9 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     
     [self.charsRemainingLabel removeFromSuperview];
     [self.composeTextField addSubview:self.charsRemainingLabel];
-    self.composeTextField.rightInset = CGRectGetWidth(self.charsRemainingLabel.frame);
+    self.composeTextField.rightInset = CGRectGetWidth(self.charsRemainingLabel.frame) + 30;
     [self.composeTextField addConstraints:@[
-                                            [NSLayoutConstraint constraintWithItem:self.composeTextField attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.charsRemainingLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:8.0],
+                                            [NSLayoutConstraint constraintWithItem:self.composeTextField attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.charsRemainingLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:28.0],
                                             [NSLayoutConstraint constraintWithItem:self.composeTextField attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.charsRemainingLabel attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]
                                             ]];
     [self.composeTextField layoutSubviews];
@@ -139,6 +141,8 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
         [self.view layoutIfNeeded];
         NSLog(@"After show: %@", self.composeView);
     }];
+    
+    [self.composeTextField becomeFirstResponder];
 }
 
 - (void)hideComposeViewWithCompletion:(void(^)(BOOL finished))completion {
@@ -189,6 +193,14 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     }];
 }
 
+- (void)replyToTweet:(Tweet *)tweet {
+    NSString *atMention = [NSString stringWithFormat:@"@%@", tweet.user.screenName];
+    if ([self.composeTextField.text rangeOfString:atMention].length == 0) {
+        self.composeTextField.text = [NSString stringWithFormat:@"%@ %@", atMention, self.composeTextField.text];
+    }
+    [self showComposeView];
+}
+
 #pragma mark UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -198,6 +210,7 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     Tweet *tweet = self.tweets[indexPath.row];
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
+    cell.delegate = self;
     cell.tweet = tweet;
     
     if (indexPath.row == self.tweets.count - 1 && self.isMoreTweetsAvailable) {
@@ -228,6 +241,7 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     TweetDetailViewController *dvc = [[TweetDetailViewController alloc] init];
+    dvc.delegate = self;
     dvc.tweet = self.tweets[indexPath.row];
     [self.navigationController pushViewController:dvc animated:YES];
     return nil;
@@ -267,5 +281,56 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
         return NO;
     }
 }
-     
+
+#pragma mark TweetCellDelegate
+
+- (void)tweetCell:(TweetCell *)tweetCell shouldReplyToTweet:(Tweet *)tweet {
+    [self replyToTweet:tweet];
+}
+
+- (void)tweetCell:(TweetCell *)tweetCell shouldRetweetTweet:(Tweet *)tweet {
+    NSLog(@"shouldRetweet %@", tweet);
+}
+
+- (void)tweetCell:(TweetCell *)tweetCell shouldSetFavorite:(BOOL)favorite ofTweet:(Tweet *)tweet {
+    tweet.favorited = favorite;
+    if (tweet.isFavorited) {
+        tweet.favoriteCount += 1;
+    } else {
+        tweet.favoriteCount -= 1;
+    }
+    
+    [[TwitterClient sharedInstance] setAsFavorite:tweet.isFavorited withId:tweet.tweetId];
+    tweetCell.tweet = tweet;
+}
+
+#pragma mark TweetDetailViewControllerDelegate
+
+- (void)tweetDetailViewController:(TweetDetailViewController *)tweetDetailViewController tweet:(Tweet *)tweet shouldBecomeFavorite:(BOOL)favorite {
+    tweet.favorited = favorite;
+    if (tweet.isFavorited) {
+        tweet.favoriteCount += 1;
+    } else {
+        tweet.favoriteCount -= 1;
+    }
+    
+    [[TwitterClient sharedInstance] setAsFavorite:tweet.isFavorited withId:tweet.tweetId];
+    tweetDetailViewController.tweet = tweet;
+    
+    // make sure to update the tableView as well
+    
+}
+
+- (void)tweetDetailViewController:(TweetDetailViewController *)tweetDetailViewController shouldRetweetTweet:(Tweet *)tweet {
+    NSLog(@"shouldRetweet %@", tweet);
+}
+
+- (void)tweetDetailViewControllerShouldComposeTweet:(TweetDetailViewController *)tweetDetailViewController {
+    [self showComposeView];
+}
+
+- (void)tweetDetailViewControllerShouldComposeReply:(TweetDetailViewController *)tweetDetailViewController toTweet:(Tweet *)tweet {
+    [self replyToTweet:tweet];
+}
+
 @end

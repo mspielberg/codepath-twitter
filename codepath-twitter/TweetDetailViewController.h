@@ -13,12 +13,16 @@
 
 @protocol TweetDetailViewControllerDelegate
 
-- (void)tweetId:(NSNumber *)tweetId didChangeStatusFavorite:(BOOL)isFavorite retweeted:(BOOL)isRetweeted;
+- (void)tweetDetailViewController:(TweetDetailViewController *)tweetDetailViewController tweet:(Tweet *)tweet shouldBecomeFavorite:(BOOL)favorite;
+- (void)tweetDetailViewController:(TweetDetailViewController *)tweetDetailViewController shouldRetweetTweet:(Tweet *)tweet;
+- (void)tweetDetailViewControllerShouldComposeTweet:(TweetDetailViewController *)tweetDetailViewController;
+- (void)tweetDetailViewControllerShouldComposeReply:(TweetDetailViewController *)tweetDetailViewController toTweet:(Tweet *)tweet;
 
 @end
 
 @interface TweetDetailViewController : UIViewController
 
+@property (nonatomic, weak) id<TweetDetailViewControllerDelegate> delegate;
 @property (nonatomic, strong) Tweet *tweet;
 
 @end
