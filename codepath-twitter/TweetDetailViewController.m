@@ -135,6 +135,7 @@
 
 - (IBAction)onRetweet:(id)sender {
     NSLog(@"onRetweet");
+    [self.delegate tweetDetailViewController:self shouldRetweetTweet:self.tweet];
 }
 
 @end

@@ -51,7 +51,7 @@ NSInteger const kOneDay = kOneHour * 24;
         self.user = [[User alloc] initWithDictionary:dictionary[@"user"]];
         self.text = dictionary[@"text"];
         self.favorited = [dictionary[@"favorited"] boolValue];
-        self.favoriteCount = [dictionary[@"favourites_count"] integerValue];
+        self.favoriteCount = [dictionary[@"favorite_count"] integerValue];
         self.retweeted = [dictionary[@"retweeted"] boolValue];
         self.retweetCount = [dictionary[@"retweet_count"] integerValue];
     }
@@ -80,7 +80,7 @@ NSInteger const kOneDay = kOneHour * 24;
              @"user": self.user.prefsDictionary,
              @"text": self.text,
              @"favorited": self.favorited ? @"true" : @"false",
-             @"favourites_count": @(self.favoriteCount),
+             @"favorite_count": @(self.favoriteCount),
              @"retweeted": self.retweeted ? @"true" : @"false",
              @"retweet_count": @(self.retweetCount)
              };

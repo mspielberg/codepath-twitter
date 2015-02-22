@@ -112,11 +112,29 @@ NSString *const kTwitterBaseUrl = @"https://api.twitter.com";
     }];
 }
 
-- (void)updateStatus:(NSString *)status asReplyToTweetId:(NSNumber *)tweetId {
-    [self POST:@"1.1/statuses/update.json" parameters:@{@"status":status, @"in_reply_to_status_id":tweetId} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+- (void)updateStatus:(NSString *)status asReplyToTweetId:(NSNumber *)tweetId withCompletion:(void (^)(Tweet *tweet, NSError *error))completion {
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:status forKey:@"status"];
+    if (tweetId) {
+        [params setObject:tweetId forKey:@"in_reply_to_status_id"];
+    }
+    [self POST:@"1.1/statuses/update.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"done updating status: %@", responseObject);
+        if (completion) {
+            completion([[Tweet alloc]initWithDictionary:responseObject], nil);
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"failed to update status: %@", error);
+        if (completion) {
+            completion(nil, error);
+        }
+    }];
+}
+
+- (void)deleteStatus:(NSNumber *)tweetId {
+    [self POST:[NSString stringWithFormat:@"1.1/statuses/destroy/%@.json", tweetId] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"done deleting status %@", tweetId);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"failed to delete status: %@", error);
     }];
 }
 
@@ -126,6 +144,28 @@ NSString *const kTwitterBaseUrl = @"https://api.twitter.com";
         NSLog(@"done setting favorite status of %ld to %d", [tweetId integerValue], isFavorite);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"failed to set favorite status of %ld to %d", [tweetId integerValue], isFavorite);
+    }];
+}
+
+- (void)retweet:(NSNumber *)tweetId {
+    [self POST:[NSString stringWithFormat:@"1.1/statuses/retweet/%@.json", tweetId] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"done retweeting ID %@", tweetId);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"failed to retweet ID %@", tweetId);
+    }];
+}
+
+- (void)unretweet:(NSNumber *)tweetId {
+    [self GET:[NSString stringWithFormat:@"1.1/statuses/show/%@.json", tweetId] parameters:@{@"trim_user": @"true", @"include_my_retweet":@"true"} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Got single tweet information: %@", responseObject);
+        NSDictionary *myRetweetId = responseObject[@"current_user_retweet"];
+        if (myRetweetId) {
+            [self deleteStatus:myRetweetId[@"id"]];
+        } else {
+            NSLog(@"Could not get my retweet ID for this tweet");
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"failed to get specific tweet %@: %@", tweetId, error);
     }];
 }
 

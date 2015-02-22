@@ -42,6 +42,8 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.title = @"Home Timeline";
+    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onCompose)];
     
@@ -96,6 +98,7 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 
 - (void)onLogout {
     NSLog(@"Logout button pushed");
+    self.tweets = @[];
     [User logout];
     [self refresh];
 }
@@ -121,7 +124,13 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     self.tweets = [@[newTweet] arrayByAddingObjectsFromArray:oldTweets];
     [self.tableView reloadData];
     
-    [[TwitterClient sharedInstance] updateStatus:newTweet.text];
+    [[TwitterClient sharedInstance] updateStatus:newTweet.text asReplyToTweetId:self.replyToTweetId withCompletion:^(Tweet *tweet, NSError *error) {
+        if (tweet) {
+            newTweet.tweetId = tweet.tweetId;
+        } else {
+            NSLog(@"Got error from posting status: %@", error);
+        }
+    }];
 }
 
 - (void)onRefresh {
@@ -193,12 +202,35 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     }];
 }
 
+- (void)setTweet:(Tweet *)tweet asFavorite:(BOOL)favorite {
+    tweet.favorited = favorite;
+    if (tweet.isFavorited) {
+        tweet.favoriteCount += 1;
+    } else {
+        tweet.favoriteCount -= 1;
+    }
+    
+    [[TwitterClient sharedInstance] setAsFavorite:tweet.isFavorited withId:tweet.tweetId];
+}
+
 - (void)replyToTweet:(Tweet *)tweet {
     NSString *atMention = [NSString stringWithFormat:@"@%@", tweet.user.screenName];
+    self.replyToTweetId = tweet.tweetId;
     if ([self.composeTextField.text rangeOfString:atMention].length == 0) {
         self.composeTextField.text = [NSString stringWithFormat:@"%@ %@", atMention, self.composeTextField.text];
     }
     [self showComposeView];
+}
+
+- (void) setTweet:(Tweet *)tweet asRetweeted:(BOOL)retweeted {
+    tweet.retweeted = retweeted;
+    if (tweet.retweeted) {
+        tweet.retweetCount += 1;
+        [[TwitterClient sharedInstance] retweet:tweet.tweetId];
+    } else {
+        tweet.retweetCount -= 1;
+        [[TwitterClient sharedInstance] unretweet:tweet.tweetId];
+    }
 }
 
 #pragma mark UITableViewDataSource
@@ -290,39 +322,22 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 
 - (void)tweetCell:(TweetCell *)tweetCell shouldRetweetTweet:(Tweet *)tweet {
     NSLog(@"shouldRetweet %@", tweet);
+    [self setTweet:tweet asRetweeted:!tweet.isRetweeted];
 }
 
 - (void)tweetCell:(TweetCell *)tweetCell shouldSetFavorite:(BOOL)favorite ofTweet:(Tweet *)tweet {
-    tweet.favorited = favorite;
-    if (tweet.isFavorited) {
-        tweet.favoriteCount += 1;
-    } else {
-        tweet.favoriteCount -= 1;
-    }
-    
-    [[TwitterClient sharedInstance] setAsFavorite:tweet.isFavorited withId:tweet.tweetId];
-    tweetCell.tweet = tweet;
+    [self setTweet:tweet asFavorite:favorite];
 }
 
 #pragma mark TweetDetailViewControllerDelegate
 
 - (void)tweetDetailViewController:(TweetDetailViewController *)tweetDetailViewController tweet:(Tweet *)tweet shouldBecomeFavorite:(BOOL)favorite {
-    tweet.favorited = favorite;
-    if (tweet.isFavorited) {
-        tweet.favoriteCount += 1;
-    } else {
-        tweet.favoriteCount -= 1;
-    }
-    
-    [[TwitterClient sharedInstance] setAsFavorite:tweet.isFavorited withId:tweet.tweetId];
-    tweetDetailViewController.tweet = tweet;
-    
-    // make sure to update the tableView as well
-    
+    [self setTweet:tweet asFavorite:favorite];
 }
 
 - (void)tweetDetailViewController:(TweetDetailViewController *)tweetDetailViewController shouldRetweetTweet:(Tweet *)tweet {
     NSLog(@"shouldRetweet %@", tweet);
+    [self setTweet:tweet asRetweeted:!tweet.isRetweeted];
 }
 
 - (void)tweetDetailViewControllerShouldComposeTweet:(TweetDetailViewController *)tweetDetailViewController {
