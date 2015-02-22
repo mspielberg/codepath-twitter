@@ -24,6 +24,15 @@
 		913E775E1A9524990071674A /* TweetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913E775C1A9524990071674A /* TweetCell.xib */; };
 		913E77611A95268D0071674A /* UIImageView+AnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 913E77601A95268D0071674A /* UIImageView+AnimationUtils.m */; };
 		913E776D1A96DA9A0071674A /* LimitedWidthTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 913E776C1A96DA9A0071674A /* LimitedWidthTextField.m */; };
+		913E77761A981FD20071674A /* retweet_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 913E77711A981FD20071674A /* retweet_on.png */; };
+		913E77771A981FD20071674A /* favorite_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 913E77721A981FD20071674A /* favorite_on.png */; };
+		913E77781A981FD20071674A /* retweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 913E77731A981FD20071674A /* retweet.png */; };
+		913E77791A981FD20071674A /* reply.png in Resources */ = {isa = PBXBuildFile; fileRef = 913E77741A981FD20071674A /* reply.png */; };
+		913E777A1A981FD20071674A /* favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 913E77751A981FD20071674A /* favorite.png */; };
+		913E777E1A98233C0071674A /* TweetDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 913E777C1A98233C0071674A /* TweetDetailViewController.m */; };
+		913E777F1A98233C0071674A /* TweetDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913E777D1A98233C0071674A /* TweetDetailViewController.xib */; };
+		913E77B31A9979250071674A /* ComposeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913E77B21A9979250071674A /* ComposeView.xib */; };
+		913E77B61A9979D70071674A /* ComposeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 913E77B51A9979D70071674A /* ComposeView.m */; };
 		F6C4BED2AF57D79EB3C0274D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43A890C12FE260E6CA8B32C4 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +80,17 @@
 		913E77601A95268D0071674A /* UIImageView+AnimationUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AnimationUtils.m"; sourceTree = "<group>"; };
 		913E776B1A96DA9A0071674A /* LimitedWidthTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LimitedWidthTextField.h; sourceTree = "<group>"; };
 		913E776C1A96DA9A0071674A /* LimitedWidthTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LimitedWidthTextField.m; sourceTree = "<group>"; };
+		913E77711A981FD20071674A /* retweet_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweet_on.png; sourceTree = "<group>"; };
+		913E77721A981FD20071674A /* favorite_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorite_on.png; sourceTree = "<group>"; };
+		913E77731A981FD20071674A /* retweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweet.png; sourceTree = "<group>"; };
+		913E77741A981FD20071674A /* reply.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reply.png; sourceTree = "<group>"; };
+		913E77751A981FD20071674A /* favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorite.png; sourceTree = "<group>"; };
+		913E777B1A98233C0071674A /* TweetDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailViewController.h; sourceTree = "<group>"; };
+		913E777C1A98233C0071674A /* TweetDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailViewController.m; sourceTree = "<group>"; };
+		913E777D1A98233C0071674A /* TweetDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetDetailViewController.xib; sourceTree = "<group>"; };
+		913E77B21A9979250071674A /* ComposeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComposeView.xib; sourceTree = "<group>"; };
+		913E77B41A9979D70071674A /* ComposeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeView.h; sourceTree = "<group>"; };
+		913E77B51A9979D70071674A /* ComposeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeView.m; sourceTree = "<group>"; };
 		F506FACC87C7A68F174E3D62 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,6 +144,7 @@
 		913E77181A941D020071674A /* codepath-twitter */ = {
 			isa = PBXGroup;
 			children = (
+				913E77701A981FCC0071674A /* Icons */,
 				913E77621A9570F70071674A /* Views */,
 				913E77591A9524860071674A /* TableViewCells */,
 				913E77501A9430FB0071674A /* Categories */,
@@ -174,6 +195,9 @@
 				913E77541A951F9A0071674A /* TimelineViewController.h */,
 				913E77551A951F9A0071674A /* TimelineViewController.m */,
 				913E77561A951F9A0071674A /* TimelineViewController.xib */,
+				913E777B1A98233C0071674A /* TweetDetailViewController.h */,
+				913E777C1A98233C0071674A /* TweetDetailViewController.m */,
+				913E777D1A98233C0071674A /* TweetDetailViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -224,8 +248,23 @@
 			children = (
 				913E776B1A96DA9A0071674A /* LimitedWidthTextField.h */,
 				913E776C1A96DA9A0071674A /* LimitedWidthTextField.m */,
+				913E77B21A9979250071674A /* ComposeView.xib */,
+				913E77B41A9979D70071674A /* ComposeView.h */,
+				913E77B51A9979D70071674A /* ComposeView.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		913E77701A981FCC0071674A /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				913E77711A981FD20071674A /* retweet_on.png */,
+				913E77721A981FD20071674A /* favorite_on.png */,
+				913E77731A981FD20071674A /* retweet.png */,
+				913E77741A981FD20071674A /* reply.png */,
+				913E77751A981FD20071674A /* favorite.png */,
+			);
+			name = Icons;
 			sourceTree = "<group>";
 		};
 		9B53C9FD0A124449CA2D4226 /* Pods */ = {
@@ -319,10 +358,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				913E77771A981FD20071674A /* favorite_on.png in Resources */,
+				913E777A1A981FD20071674A /* favorite.png in Resources */,
+				913E77791A981FD20071674A /* reply.png in Resources */,
+				913E777F1A98233C0071674A /* TweetDetailViewController.xib in Resources */,
 				913E772A1A941D020071674A /* LaunchScreen.xib in Resources */,
+				913E77B31A9979250071674A /* ComposeView.xib in Resources */,
+				913E77761A981FD20071674A /* retweet_on.png in Resources */,
 				913E775E1A9524990071674A /* TweetCell.xib in Resources */,
 				913E77581A951F9A0071674A /* TimelineViewController.xib in Resources */,
 				913E77271A941D020071674A /* Images.xcassets in Resources */,
+				913E77781A981FD20071674A /* retweet.png in Resources */,
 				913E77441A9421580071674A /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,8 +423,10 @@
 				913E775D1A9524990071674A /* TweetCell.m in Sources */,
 				913E77481A9422510071674A /* TwitterClient.m in Sources */,
 				913E77571A951F9A0071674A /* TimelineViewController.m in Sources */,
+				913E77B61A9979D70071674A /* ComposeView.m in Sources */,
 				913E77611A95268D0071674A /* UIImageView+AnimationUtils.m in Sources */,
 				913E776D1A96DA9A0071674A /* LimitedWidthTextField.m in Sources */,
+				913E777E1A98233C0071674A /* TweetDetailViewController.m in Sources */,
 				913E771F1A941D020071674A /* AppDelegate.m in Sources */,
 				913E774F1A9429AF0071674A /* User.m in Sources */,
 				913E774C1A9429970071674A /* Tweet.m in Sources */,

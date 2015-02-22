@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "TimelineViewController.h"
+#import "TweetDetailViewController.h"
 #import "TwitterClient.h"
 #import "TweetCell.h"
 #import "Tweet.h"
@@ -44,6 +45,7 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     
     UINib *tweetCellNib =[UINib nibWithNibName:@"TweetCell" bundle:nil];
     self.sizingCell = [[tweetCellNib instantiateWithOwner:self options:nil] firstObject];
+    NSLog(@"sizingCell initial size = %@", self.sizingCell);
     [self.tableView registerNib:tweetCellNib forCellReuseIdentifier:@"TweetCell"];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -211,12 +213,24 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 //        NSLog(@"entering heightForRowAtIndexPath");
     Tweet *tweet = self.tweets[indexPath.row];
 //    NSLog(@"tweet = %@", tweet);
+    CGRect frame = self.sizingCell.frame;
+    frame.size.width = self.tableView.frame.size.width;
+    self.sizingCell.frame = frame;
     self.sizingCell.tweet = tweet;
+    
 //        NSLog(@"Sizing row %ld with tweet %@", indexPath.row, self.sizingCell.tweet);
     [self.sizingCell layoutSubviews];
+    NSLog(@"sizingCell layout size = %@", self.sizingCell);
     CGFloat desiredHeight = [self.sizingCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
 //        NSLog(@"Calculated height %f for row %ld", desiredHeight, indexPath.row);
-    return desiredHeight;
+    return desiredHeight + 1.0;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    TweetDetailViewController *dvc = [[TweetDetailViewController alloc] init];
+    dvc.tweet = self.tweets[indexPath.row];
+    [self.navigationController pushViewController:dvc animated:YES];
+    return nil;
 }
 
 #pragma mark Persistance
@@ -246,8 +260,8 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     NSInteger delta = string.length - range.length;
     NSInteger lengthAfterEdit = textField.text.length + delta;
     NSInteger remainingAfterEdit = kComposeLengthLimit - lengthAfterEdit;
-    if (remainingAfterEdit >= 0) {
-        self.charsRemainingLabel.text = [NSString stringWithFormat:@"%ld  ", remainingAfterEdit];
+    if (remainingAfterEdit >= 0 && [string rangeOfString:@"\n"].length == 0) {
+        self.charsRemainingLabel.text = [NSString stringWithFormat:@"%ld", remainingAfterEdit];
         return YES;
     } else {
         return NO;

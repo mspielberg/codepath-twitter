@@ -17,6 +17,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tweetTextLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
+
 @end
 
 @implementation TweetCell
@@ -35,17 +38,38 @@
 - (void)setTweet:(Tweet *)tweet {
     _tweet = tweet;
     User *user = tweet.user;
-//    [self.userImageView setImageWithURL:user.profileImageUrl placeholderImage:nil duration:0.3];
+    [self.userImageView setImageWithURL:user.profileImageUrl placeholderImage:nil duration:0.3];
     self.nameLabel.text = user.name;
     self.screenNameLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
     self.timeLabel.text = [tweet relativeDate];
     self.tweetTextLabel.text = tweet.text;
+    
+    if (tweet.isFavorited) {
+        [self.favoriteButton setImage:[UIImage imageNamed:@"favorite_on"] forState:UIControlStateNormal];
+    } else {
+        [self.favoriteButton setImage:[UIImage imageNamed:@"favorite"] forState:UIControlStateNormal];
+    }
+    
+    if (tweet.isRetweeted) {
+        [self.retweetButton setImage:[UIImage imageNamed:@"retweet_on"] forState:UIControlStateNormal];
+    } else {
+        [self.retweetButton setImage:[UIImage imageNamed:@"retweet"] forState:UIControlStateNormal];
+    }
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
     self.tweetTextLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tweetTextLabel.frame);
+}
+
+- (IBAction)onFavorite:(id)sender {
+}
+
+- (IBAction)onReply:(id)sender {
+}
+
+- (IBAction)onRetweet:(id)sender {
 }
 
 @end

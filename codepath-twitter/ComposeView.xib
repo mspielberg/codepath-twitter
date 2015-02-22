@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view hidden="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="100" verticalCompressionResistancePriority="100" id="hIk-7l-yBK" userLabel="ComposeView" customClass="ComposeView">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="73"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PQX-sV-hDY" customClass="LimitedWidthTextField">
+                    <rect key="frame" x="8" y="8" width="536" height="57"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" keyboardType="twitter"/>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="140" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a8N-dB-spp">
+                    <rect key="frame" x="515" y="29.5" width="21" height="14.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="500" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTu-Vy-rQP">
+                    <rect key="frame" x="552" y="8" width="40" height="30"/>
+                    <state key="normal" title="Tweet">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="PQX-sV-hDY" secondAttribute="bottom" constant="8" id="Ffe-rF-GwZ"/>
+                <constraint firstItem="PQX-sV-hDY" firstAttribute="top" secondItem="hIk-7l-yBK" secondAttribute="top" constant="8" id="SRe-9Z-XRq"/>
+                <constraint firstItem="PQX-sV-hDY" firstAttribute="leading" secondItem="hIk-7l-yBK" secondAttribute="leading" constant="8" id="VRw-aW-e9w"/>
+                <constraint firstAttribute="trailing" secondItem="aTu-Vy-rQP" secondAttribute="trailing" constant="8" id="Wue-dv-HTI"/>
+                <constraint firstItem="PQX-sV-hDY" firstAttribute="top" secondItem="aTu-Vy-rQP" secondAttribute="top" id="hBV-Q4-RrF"/>
+                <constraint firstItem="PQX-sV-hDY" firstAttribute="trailing" secondItem="a8N-dB-spp" secondAttribute="trailing" constant="8" id="nE4-2b-7k1"/>
+                <constraint firstItem="aTu-Vy-rQP" firstAttribute="leading" secondItem="PQX-sV-hDY" secondAttribute="trailing" constant="8" id="rGs-Bd-05Y"/>
+                <constraint firstItem="a8N-dB-spp" firstAttribute="centerY" secondItem="PQX-sV-hDY" secondAttribute="centerY" id="u6M-HF-haR"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="168" y="-107.5"/>
+        </view>
+    </objects>
+</document>

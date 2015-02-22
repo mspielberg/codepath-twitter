@@ -50,6 +50,10 @@ NSInteger const kOneDay = kOneHour * 24;
         self.creationTime = [[Tweet longDateFormatter] dateFromString:dictionary[@"created_at"]];
         self.user = [[User alloc] initWithDictionary:dictionary[@"user"]];
         self.text = dictionary[@"text"];
+        self.favorited = [dictionary[@"favorited"] boolValue];
+        self.favoriteCount = [dictionary[@"favourites_count"] integerValue];
+        self.retweeted = [dictionary[@"retweeted"] boolValue];
+        self.retweetCount = [dictionary[@"retweet_count"] integerValue];
     }
     return self;
 }
@@ -74,7 +78,11 @@ NSInteger const kOneDay = kOneHour * 24;
              @"id": self.tweetId,
              @"created_at": [[Tweet longDateFormatter] stringFromDate:self.creationTime],
              @"user": self.user.prefsDictionary,
-             @"text": self.text
+             @"text": self.text,
+             @"favorited": self.favorited ? @"true" : @"false",
+             @"favourites_count": @(self.favoriteCount),
+             @"retweeted": self.retweeted ? @"true" : @"false",
+             @"retweet_count": @(self.retweetCount)
              };
 }
 @end
