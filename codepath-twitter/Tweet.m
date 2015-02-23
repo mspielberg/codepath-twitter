@@ -54,6 +54,9 @@ NSInteger const kOneDay = kOneHour * 24;
         self.favoriteCount = [dictionary[@"favorite_count"] integerValue];
         self.retweeted = [dictionary[@"retweeted"] boolValue];
         self.retweetCount = [dictionary[@"retweet_count"] integerValue];
+        if (dictionary[@"retweeted_status"]) {
+            self.originalTweet = [[Tweet alloc] initWithDictionary:dictionary[@"retweeted_status"]];
+        }
     }
     return self;
 }

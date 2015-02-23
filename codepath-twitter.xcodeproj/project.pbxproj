@@ -231,9 +231,9 @@
 		913E77591A9524860071674A /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				913E775C1A9524990071674A /* TweetCell.xib */,
 				913E775A1A9524990071674A /* TweetCell.h */,
 				913E775B1A9524990071674A /* TweetCell.m */,
-				913E775C1A9524990071674A /* TweetCell.xib */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";

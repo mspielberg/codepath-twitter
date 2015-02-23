@@ -12,6 +12,9 @@
 
 @interface TweetDetailViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView *retweetView;
+@property (weak, nonatomic) IBOutlet UILabel *retweetLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *screenNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
@@ -45,7 +48,7 @@
     self.title = @"Tweet";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onCompose)];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.userImageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:8.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.retweetView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:4.0]];
     [self.view layoutIfNeeded];
 
     // ensure subviews are updated
@@ -78,11 +81,19 @@
     [tweet addObserver:self forKeyPath:@"retweetCount" options:NSKeyValueObservingOptionInitial context:nil];
     _tweet = tweet;
     
-    self.userNameLabel.text = self.tweet.user.name;
-    self.screenNameLabel.text = [NSString stringWithFormat:@"@%@", self.tweet.user.screenName];
-    [self.userImageView setImageWithURL:self.tweet.user.profileImageUrl placeholderImage:nil duration:0.0];
-    self.tweetTextLabel.text = self.tweet.text;
-    self.dateLabel.text = [[self.class dateFormatter] stringFromDate:self.tweet.creationTime];
+    Tweet *originalTweet = tweet.originalTweet ? tweet.originalTweet : tweet;
+    if (tweet.originalTweet) {
+        self.retweetView.hidden = false;
+        self.retweetLabel.text = [NSString stringWithFormat:@"retweeted by @%@", tweet.user.screenName];
+    } else {
+        self.retweetView.hidden = true;
+    }
+    
+    self.userNameLabel.text = originalTweet.user.name;
+    self.screenNameLabel.text = [NSString stringWithFormat:@"@%@", originalTweet.user.screenName];
+    [self.userImageView setImageWithURL:originalTweet.user.profileImageUrl placeholderImage:nil duration:0.0];
+    self.tweetTextLabel.text = originalTweet.text;
+    self.dateLabel.text = [[self.class dateFormatter] stringFromDate:originalTweet.creationTime];
 }
 
 - (void)dealloc {

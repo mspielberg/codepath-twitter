@@ -11,6 +11,9 @@
 #import "User.h"
 
 @interface TweetCell ()
+@property (weak, nonatomic) IBOutlet UIView *retweetView;
+@property (weak, nonatomic) IBOutlet UILabel *retweetLabel;
+
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *screenNameLabel;
@@ -40,12 +43,22 @@
     [_tweet removeObserver:self forKeyPath:@"retweeted"];
     
     _tweet = tweet;
-    User *user = tweet.user;
+    
+    Tweet *originalTweet = tweet.originalTweet ? tweet.originalTweet : tweet;
+    
+    User *user = originalTweet.user;
     [self.userImageView setImageWithURL:user.profileImageUrl placeholderImage:nil duration:0.3];
     self.nameLabel.text = user.name;
     self.screenNameLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
-    self.timeLabel.text = [tweet relativeDate];
-    self.tweetTextLabel.text = tweet.text;
+    self.timeLabel.text = [originalTweet relativeDate];
+    self.tweetTextLabel.text = originalTweet.text;
+    
+    if (tweet.originalTweet) {
+        self.retweetView.hidden = false;
+        self.retweetLabel.text = [NSString stringWithFormat:@"retweeted by @%@", tweet.user.screenName];
+    } else {
+        self.retweetView.hidden = true;
+    }
     
     [tweet addObserver:self forKeyPath:@"favorited" options:NSKeyValueObservingOptionInitial context:nil];
     [tweet addObserver:self forKeyPath:@"retweeted" options:NSKeyValueObservingOptionInitial context:nil];
@@ -54,7 +67,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.tweetTextLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tweetTextLabel.frame);
+    self.tweetTextLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tweetTextLabel.superview.frame);
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

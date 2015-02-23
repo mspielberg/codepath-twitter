@@ -62,7 +62,7 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     
     [self.charsRemainingLabel removeFromSuperview];
     [self.composeTextField addSubview:self.charsRemainingLabel];
-    self.composeTextField.rightInset = CGRectGetWidth(self.charsRemainingLabel.frame) + 30;
+    self.composeTextField.rightInset = CGRectGetWidth(self.charsRemainingLabel.frame);
     [self.composeTextField addConstraints:@[
                                             [NSLayoutConstraint constraintWithItem:self.composeTextField attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.charsRemainingLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:28.0],
                                             [NSLayoutConstraint constraintWithItem:self.composeTextField attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.charsRemainingLabel attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]
@@ -74,7 +74,8 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidLogin) name:UserDidLoginNotification object:nil];
     
-    [self loadTweetsFromUserDefaults];
+//    [self loadTweetsFromUserDefaults];
+    [self refresh];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -214,22 +215,30 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 }
 
 - (void)replyToTweet:(Tweet *)tweet {
-    NSString *atMention = [NSString stringWithFormat:@"@%@", tweet.user.screenName];
+    NSString *atMention;
+    if (tweet.originalTweet) {
+        atMention = [NSString stringWithFormat:@"@%@ @%@", tweet.user.screenName, tweet.originalTweet.user.screenName];
+    } else {
+        atMention = [NSString stringWithFormat:@"@%@", tweet.user.screenName];
+    }
     self.replyToTweetId = tweet.tweetId;
     if ([self.composeTextField.text rangeOfString:atMention].length == 0) {
         self.composeTextField.text = [NSString stringWithFormat:@"%@ %@", atMention, self.composeTextField.text];
+        self.charsRemainingLabel.text = [NSString stringWithFormat:@"%ld", kComposeLengthLimit - self.composeTextField.text.length];
     }
     [self showComposeView];
 }
 
 - (void) setTweet:(Tweet *)tweet asRetweeted:(BOOL)retweeted {
-    tweet.retweeted = retweeted;
-    if (tweet.retweeted) {
-        tweet.retweetCount += 1;
-        [[TwitterClient sharedInstance] retweet:tweet.tweetId];
-    } else {
-        tweet.retweetCount -= 1;
-        [[TwitterClient sharedInstance] unretweet:tweet.tweetId];
+    if (![[User currentUser].screenName isEqualToString:tweet.user.screenName]) {
+        tweet.retweeted = retweeted;
+        if (tweet.retweeted) {
+            tweet.retweetCount += 1;
+            [[TwitterClient sharedInstance] retweet:tweet.tweetId];
+        } else {
+            tweet.retweetCount -= 1;
+            [[TwitterClient sharedInstance] unretweet:tweet.tweetId];
+        }
     }
 }
 
@@ -240,11 +249,12 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"entering cellForRowAtIndexPath row=%ld", indexPath.row);
     Tweet *tweet = self.tweets[indexPath.row];
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     cell.delegate = self;
     cell.tweet = tweet;
-    
+//    NSLog(@"Rechecked size for row %ld = %f", indexPath.row, [self tableView:self.tableView heightForRowAtIndexPath:indexPath]);
     if (indexPath.row == self.tweets.count - 1 && self.isMoreTweetsAvailable) {
         [self loadMoreData];
     }
@@ -255,7 +265,7 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 #pragma mark UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//        NSLog(@"entering heightForRowAtIndexPath");
+    NSLog(@"entering heightForRowAtIndexPath row=%ld", indexPath.row);
     Tweet *tweet = self.tweets[indexPath.row];
 //    NSLog(@"tweet = %@", tweet);
     CGRect frame = self.sizingCell.frame;
@@ -263,11 +273,11 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     self.sizingCell.frame = frame;
     self.sizingCell.tweet = tweet;
     
-//        NSLog(@"Sizing row %ld with tweet %@", indexPath.row, self.sizingCell.tweet);
+//    NSLog(@"Sizing row %ld with tweet %@", indexPath.row, self.sizingCell.tweet);
     [self.sizingCell layoutSubviews];
-    NSLog(@"sizingCell layout size = %@", self.sizingCell);
+//    NSLog(@"sizingCell layout size = %@", self.sizingCell);
     CGFloat desiredHeight = [self.sizingCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-//        NSLog(@"Calculated height %f for row %ld", desiredHeight, indexPath.row);
+    NSLog(@"Calculated height %f for row %ld", desiredHeight, indexPath.row);
     return desiredHeight + 1.0;
 }
 
@@ -301,6 +311,11 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 }
 
 #pragma mark UITextFieldDelegate
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    self.charsRemainingLabel.text = [NSString stringWithFormat:@"%ld", kComposeLengthLimit];
+    return YES;
+}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSInteger delta = string.length - range.length;

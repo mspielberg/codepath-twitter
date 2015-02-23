@@ -2,7 +2,7 @@
 
 This is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: `<Number of hours spent>`
+Time spent: `14`
 
 ### Features
 
@@ -28,7 +28,7 @@ Time spent: `<Number of hours spent>`
 
 #### Extra
 - [x] OAuth login flow takes place in a UIWebView within the app, not via MobileSafari.
-- [x] Composing a new tweet or replay happens on the main timeline view.
+- [x] Composing a new tweet or reply happens on the main timeline view.
 
 ### Walkthrough
 
