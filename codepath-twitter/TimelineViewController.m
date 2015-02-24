@@ -52,6 +52,8 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     NSLog(@"sizingCell initial size = %@", self.sizingCell);
     [self.tableView registerNib:tweetCellNib forCellReuseIdentifier:@"TweetCell"];
     
+//    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     [self.refreshControl addTarget:self action:@selector(onRefresh) forControlEvents:UIControlEventValueChanged];
@@ -250,10 +252,18 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"entering cellForRowAtIndexPath row=%ld", indexPath.row);
+    CGFloat expectedHeight = [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
+    NSLog(@"expected cell for row %ld to have height %f", indexPath.row, expectedHeight);
     Tweet *tweet = self.tweets[indexPath.row];
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
+    NSLog(@"Dequeued cell %@ for row %ld with height %f", cell, indexPath.row, cell.frame.size.height);
+    cell.frame = CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), expectedHeight);
     cell.delegate = self;
     cell.tweet = tweet;
+    [self.sizingCell setNeedsLayout];
+    [self.sizingCell layoutIfNeeded];
+    NSLog(@"After layout, cell for row %ld has height %f", indexPath.row, cell.frame.size.height);
+
 //    NSLog(@"Rechecked size for row %ld = %f", indexPath.row, [self tableView:self.tableView heightForRowAtIndexPath:indexPath]);
     if (indexPath.row == self.tweets.count - 1 && self.isMoreTweetsAvailable) {
         [self loadMoreData];
@@ -268,17 +278,22 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     NSLog(@"entering heightForRowAtIndexPath row=%ld", indexPath.row);
     Tweet *tweet = self.tweets[indexPath.row];
 //    NSLog(@"tweet = %@", tweet);
-    CGRect frame = self.sizingCell.frame;
-    frame.size.width = self.tableView.frame.size.width;
-    self.sizingCell.frame = frame;
+//    CGRect frame = self.sizingCell.frame;
+//    frame.size.width = self.tableView.frame.size.width;
+//    self.sizingCell.frame = CGRectMake(0, 0, 250, 1024);
+    CGFloat tableWidth = CGRectGetWidth(self.tableView.frame);
+//    self.sizingCell.frame = self.tableView.frame;
+    self.sizingCell.frame = CGRectMake(0, 0, tableWidth, 1024);
     self.sizingCell.tweet = tweet;
     
 //    NSLog(@"Sizing row %ld with tweet %@", indexPath.row, self.sizingCell.tweet);
-    [self.sizingCell layoutSubviews];
+    [self.sizingCell setNeedsLayout];
+    [self.sizingCell layoutIfNeeded];
+//    [self.sizingCell layoutSubviews];
 //    NSLog(@"sizingCell layout size = %@", self.sizingCell);
-    CGFloat desiredHeight = [self.sizingCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    CGFloat desiredHeight = [self.sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
     NSLog(@"Calculated height %f for row %ld", desiredHeight, indexPath.row);
-    return desiredHeight + 1.0;
+    return desiredHeight + 1.5;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {

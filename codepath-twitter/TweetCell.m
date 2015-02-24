@@ -13,6 +13,8 @@
 @interface TweetCell ()
 @property (weak, nonatomic) IBOutlet UIView *retweetView;
 @property (weak, nonatomic) IBOutlet UILabel *retweetLabel;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *retweetViewLayoutConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *mainTweetViewLayoutConstraint;
 
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -56,18 +58,34 @@
     if (tweet.originalTweet) {
         self.retweetView.hidden = false;
         self.retweetLabel.text = [NSString stringWithFormat:@"retweeted by @%@", tweet.user.screenName];
+//        [self.retweetView.superview addConstraint:self.retweetViewLayoutConstraint];
     } else {
         self.retweetView.hidden = true;
+//        [self.retweetView.superview removeConstraint:self.retweetViewLayoutConstraint];
     }
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
+    [self setNeedsLayout];
     
     [tweet addObserver:self forKeyPath:@"favorited" options:NSKeyValueObservingOptionInitial context:nil];
     [tweet addObserver:self forKeyPath:@"retweeted" options:NSKeyValueObservingOptionInitial context:nil];
 }
 
+- (void)updateConstraints {
+    [self.retweetView.superview removeConstraints:@[self.retweetViewLayoutConstraint, self.mainTweetViewLayoutConstraint]];
+    if (self.tweet.originalTweet) {
+        [self.retweetView.superview addConstraint:self.retweetViewLayoutConstraint];
+    } else {
+        [self.retweetView.superview addConstraint:self.mainTweetViewLayoutConstraint];
+        self.mainTweetViewLayoutConstraint.constant = 8.0;
+    }
+    [super updateConstraints];
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
-    self.tweetTextLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tweetTextLabel.superview.frame);
+    [self.contentView layoutIfNeeded];
+    self.tweetTextLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tweetTextLabel.frame);
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
