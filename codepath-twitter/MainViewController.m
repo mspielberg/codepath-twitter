@@ -75,6 +75,7 @@
     };
     self.timelineViewController.title = @"Home";
     self.underlayViewController.overlayViewController = self.timelineNavigationController;
+    [self.timelineNavigationController popToRootViewControllerAnimated:YES];
     [self.underlayViewController snapLeftAnimated:YES];
 }
 
@@ -84,6 +85,7 @@
     };
     self.timelineViewController.title = @"Mentions";
     self.underlayViewController.overlayViewController = self.timelineNavigationController;
+    [self.timelineNavigationController popToRootViewControllerAnimated:YES];
     [self.underlayViewController snapLeftAnimated:YES];
 }
 
@@ -95,8 +97,14 @@
     NSLog(@"Entering presentLogin");
     LoginViewController *lvc = [[LoginViewController alloc] init];
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:lvc];
+
     NSLog(@"Calling presentViewController");
-    [self presentViewController:nc animated:YES completion:nil];
+    /* seems to resolve some unexpected delays before the ViewController is presented
+     * http://stackoverflow.com/questions/21075540/presentviewcontrolleranimatedyes-view-will-not-appear-until-user-taps-again
+     */
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:nc animated:YES completion:nil];
+    });
 }
 
 #pragma mark MainMenuViewControllerDelegate

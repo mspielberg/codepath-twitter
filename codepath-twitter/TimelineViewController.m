@@ -92,10 +92,6 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     // Dispose of any resources that can be recreated.
 }
 
-- (void)onDidLogin {
-    [self refresh];
-}
-
 - (void)onDidLogout {
     [self refresh];
 }
@@ -220,7 +216,7 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     self.replyToTweetId = tweet.tweetId;
     if ([self.composeTextField.text rangeOfString:atMention].length == 0) {
         self.composeTextField.text = [NSString stringWithFormat:@"%@ %@", atMention, self.composeTextField.text];
-        self.charsRemainingLabel.text = [NSString stringWithFormat:@"%u", kComposeLengthLimit - self.composeTextField.text.length];
+        self.charsRemainingLabel.text = [NSString stringWithFormat:@"%lu", kComposeLengthLimit - self.composeTextField.text.length];
     }
     [self showComposeView];
 }
@@ -241,8 +237,10 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 #pragma mark timelineFetchBlock
 
 - (void)setTimelineFetchBlock:(TimelineFetchBlock)timelineFetchBlock {
-    _timelineFetchBlock = timelineFetchBlock;
-    [self refresh];
+    if (timelineFetchBlock != _timelineFetchBlock || self.tweets.count == 0) {
+        _timelineFetchBlock = timelineFetchBlock;
+        [self refresh];
+    }
 }
 
 #pragma mark UITableViewDataSource
