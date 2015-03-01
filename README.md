@@ -2,7 +2,7 @@
 
 This is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: `12`
+Time spent: `13`
 
 ### Features
 
@@ -26,6 +26,7 @@ Time spent: `12`
   - [x] Menu item handling is in a separate view controller from the overlay/underlay handling.
   - [x] Dragging is bounded.
   - [x] Navigation bars contain buttons to show/hide the menu.
+  - [x] Tapping a menu item for a timeline pops any currently displayed detail views.
 - [x] Profile page
   - [x] summoned by tapping user names and screennames, as well as within the tweet detail view.
 
