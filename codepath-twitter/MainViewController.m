@@ -73,6 +73,7 @@
     self.timelineViewController.timelineFetchBlock = ^(NSNumber *startId, void(^completion)(NSArray *tweets, NSError *error)) {
         [[TwitterClient sharedInstance] homeTimelineFromStartId:startId completion:completion];
     };
+    self.timelineViewController.title = @"Home";
     self.underlayViewController.overlayViewController = self.timelineNavigationController;
     [self.underlayViewController snapLeftAnimated:YES];
 }
@@ -81,6 +82,7 @@
     self.timelineViewController.timelineFetchBlock = ^(NSNumber *startId, void(^completion)(NSArray *tweets, NSError *error)) {
         [[TwitterClient sharedInstance] mentionsTimelineFromStartId:startId completion:completion];
     };
+    self.timelineViewController.title = @"Mentions";
     self.underlayViewController.overlayViewController = self.timelineNavigationController;
     [self.underlayViewController snapLeftAnimated:YES];
 }

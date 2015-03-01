@@ -43,8 +43,6 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.title = @"Home Timeline";
-    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onCompose)];
     
     UINib *tweetCellNib =[UINib nibWithNibName:@"TweetCell" bundle:nil];
@@ -72,7 +70,6 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
                                             ]];
     [self.composeTextField layoutSubviews];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidLogin) name:UserDidLoginNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidLogout) name:UserDidLogoutNotification object:nil];
     
     [self refresh];
