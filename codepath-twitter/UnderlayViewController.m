@@ -65,7 +65,7 @@
             }
             break;
         default:
-            NSLog(@"Unexpected state %ld for UIPanGestureRecognizer", sender.state);
+            NSLog(@"Unexpected state %d for UIPanGestureRecognizer", sender.state);
     }
 }
 

@@ -49,7 +49,7 @@ NSInteger const kOneDay = kOneHour * 24;
         self.tweetId = dictionary[@"id"];
         self.creationTime = [[Tweet longDateFormatter] dateFromString:dictionary[@"created_at"]];
         self.user = [[User alloc] initWithDictionary:dictionary[@"user"]];
-        self.text = dictionary[@"text"];
+        self.text = [self decodeEntitiesInString:dictionary[@"text"]];
         self.favorited = [dictionary[@"favorited"] boolValue];
         self.favoriteCount = [dictionary[@"favorite_count"] integerValue];
         self.retweeted = [dictionary[@"retweeted"] boolValue];
@@ -70,6 +70,10 @@ NSInteger const kOneDay = kOneHour * 24;
     } else {
         return [[Tweet shortDateFormatter] stringFromDate:self.creationTime];
     }
+}
+
+- (NSString *)decodeEntitiesInString:(NSString *)string {
+    return [[[string stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"] stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"] stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
 }
 
 - (NSString *)description {

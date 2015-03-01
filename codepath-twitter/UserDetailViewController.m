@@ -50,6 +50,12 @@
     self.user = self.user;
 }
 
+- (void)dealloc {
+    for (NSString *keyPath in self.propsToObserve) {
+        [self.user removeObserver:self forKeyPath:keyPath];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -80,11 +86,11 @@
     } else if ([keyPath isEqualToString:@"userDescription"]) {
         self.descriptionLabel.text = self.user.userDescription;
     } else if ([keyPath isEqualToString:@"followerCount"]) {
-        self.followersCountLabel.text = [NSString stringWithFormat:@"%ld", self.user.followerCount];
+        self.followersCountLabel.text = [NSString stringWithFormat:@"%ld", (long)self.user.followerCount];
     } else if ([keyPath isEqualToString:@"friendCount"]) {
-        self.followingCountLabel.text = [NSString stringWithFormat:@"%ld", self.user.friendCount];
+        self.followingCountLabel.text = [NSString stringWithFormat:@"%ld", (long)self.user.friendCount];
     } else if ([keyPath isEqualToString:@"statusCount"]) {
-        self.tweetCountLabel.text = [NSString stringWithFormat:@"%ld", self.user.statusCount];
+        self.tweetCountLabel.text = [NSString stringWithFormat:@"%ld", (long)self.user.statusCount];
     }
 }
 

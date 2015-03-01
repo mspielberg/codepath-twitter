@@ -112,7 +112,7 @@
             [self.favoriteButton setImage:[UIImage imageNamed:@"favorite"] forState:UIControlStateNormal];
         }
     } else if ([keyPath isEqualToString:@"favoriteCount"]) {
-        self.favoriteCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.favoriteCount];
+        self.favoriteCountLabel.text = [NSString stringWithFormat:@"%ld", (long)self.tweet.favoriteCount];
     } else if ([keyPath isEqualToString:@"retweeted"]) {
         if (self.tweet.isRetweeted) {
             [self.retweetButton setImage:[UIImage imageNamed:@"retweet_on"] forState:UIControlStateNormal];
@@ -120,7 +120,7 @@
             [self.retweetButton setImage:[UIImage imageNamed:@"retweet"] forState:UIControlStateNormal];
         }
     } else if ([keyPath isEqualToString:@"retweetCount"]) {
-        self.retweetCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.retweetCount];
+        self.retweetCountLabel.text = [NSString stringWithFormat:@"%ld", (long)self.tweet.retweetCount];
     }
 }
 

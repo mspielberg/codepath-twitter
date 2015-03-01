@@ -146,9 +146,9 @@ NSString *const kTwitterBaseUrl = @"https://api.twitter.com";
 - (void)setAsFavorite:(BOOL)isFavorite withId:(NSNumber *)tweetId {
     NSString *endpoint = [NSString stringWithFormat:@"1.1/favorites/%@.json", isFavorite ? @"create" : @"destroy"];
     [self POST:endpoint parameters:@{@"id": tweetId} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"done setting favorite status of %ld to %d", [tweetId integerValue], isFavorite);
+        NSLog(@"done setting favorite status of %@ to %d", tweetId, isFavorite);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"failed to set favorite status of %ld to %d", [tweetId integerValue], isFavorite);
+        NSLog(@"failed to set favorite status of %@ to %d", tweetId, isFavorite);
     }];
 }
 

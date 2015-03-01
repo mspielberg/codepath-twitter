@@ -78,6 +78,9 @@
         case 2:
             [self.delegate mainMenuViewControllerDidSelectMentions:self];
             break;
+        case 5:
+            [self.delegate mainMenuViewControllerDidSelectLogout:self];
+            break;
     }
 }
 

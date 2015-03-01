@@ -45,12 +45,11 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     
     self.title = @"Home Timeline";
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(onCompose)];
     
     UINib *tweetCellNib =[UINib nibWithNibName:@"TweetCell" bundle:nil];
     [self.tableView registerNib:tweetCellNib forCellReuseIdentifier:@"TweetCell"];
-    //    self.sizingCell = [[tweetCellNib instantiateWithOwner:self options:nil] firstObject];
+//        self.sizingCell = [[tweetCellNib instantiateWithOwner:self options:nil] firstObject];
     self.sizingCell = [self.tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     NSLog(@"sizingCell initial size = %@", self.sizingCell);
 
@@ -73,16 +72,13 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
                                             ]];
     [self.composeTextField layoutSubviews];
     
-//    self.composeTextField.rightView = self.charsRemainingLabel;
-//    self.composeTextField.rightViewMode = UITextFieldViewModeWhileEditing;
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidLogin) name:UserDidLoginNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDidLogout) name:UserDidLogoutNotification object:nil];
     
-//    [self loadTweetsFromUserDefaults];
+    [self refresh];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [self refresh];
 }
 
 //- (TweetCell *)sizingCell {
@@ -103,10 +99,7 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     [self refresh];
 }
 
-- (void)onLogout {
-    NSLog(@"Logout button pushed");
-    self.tweets = @[];
-    [User logout];
+- (void)onDidLogout {
     [self refresh];
 }
 
@@ -182,16 +175,12 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 }
 
 - (void)refresh {
+    self.tweets = @[];
+    [self.tableView reloadData];
     if ([[TwitterClient sharedInstance] isAuthorized]) {
-        self.tweets = @[];
-        [self.tableView reloadData];
         [self loadMoreData];
-        [self.refreshControl endRefreshing];
-    } else {
-        LoginViewController *lvc = [[LoginViewController alloc] init];
-        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:lvc];
-        [self presentViewController:nc animated:YES completion:nil];
     }
+    [self.refreshControl endRefreshing];
 }
 
 - (void)loadMoreData {
@@ -203,7 +192,6 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
             if (tweets && tweets.count > 0) {
                 self.isMoreTweetsAvailable = YES;
                 self.tweets = [self.tweets arrayByAddingObjectsFromArray:tweets];
-                [self saveTweetsToUserDefaults];
                 [self.tableView reloadData];
             } else {
                 self.isMoreTweetsAvailable = NO;
@@ -235,7 +223,7 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     self.replyToTweetId = tweet.tweetId;
     if ([self.composeTextField.text rangeOfString:atMention].length == 0) {
         self.composeTextField.text = [NSString stringWithFormat:@"%@ %@", atMention, self.composeTextField.text];
-        self.charsRemainingLabel.text = [NSString stringWithFormat:@"%ld", kComposeLengthLimit - self.composeTextField.text.length];
+        self.charsRemainingLabel.text = [NSString stringWithFormat:@"%u", kComposeLengthLimit - self.composeTextField.text.length];
     }
     [self showComposeView];
 }
@@ -282,7 +270,7 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 #pragma mark UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"entering heightForRowAtIndexPath row=%ld", indexPath.row);
+    NSLog(@"entering heightForRowAtIndexPath row=%ld", (long)indexPath.row);
     TweetCell *sizingCell = [self sizingCell];
     Tweet *tweet = self.tweets[indexPath.row];
     CGRect frame = self.sizingCell.frame;
@@ -293,7 +281,7 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     
     [self.sizingCell layoutIfNeeded];
     CGFloat desiredHeight = [sizingCell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-    NSLog(@"Calculated height %f for row %ld", desiredHeight, indexPath.row);
+    NSLog(@"Calculated height %f for row %ld", desiredHeight, (long)indexPath.row);
     return desiredHeight + 2;
 }
 
@@ -305,31 +293,10 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     return nil;
 }
 
-#pragma mark Persistance
-
-- (void)saveTweetsToUserDefaults {
-    [[NSUserDefaults standardUserDefaults] setObject:[self.tweets mapWithBlock:^id(Tweet *tweet) {
-        return tweet.prefsDictionary;
-    }] forKey:UserDefaultsTweetsKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    NSLog(@"Saved %ld tweets to user defaults", self.tweets.count);
-}
-
-- (void)loadTweetsFromUserDefaults {
-    NSArray *dictionaries = [[NSUserDefaults standardUserDefaults] objectForKey:UserDefaultsTweetsKey];
-    if (dictionaries) {
-        NSLog(@"Loaded %ld tweets from user defaults", dictionaries.count);
-        self.tweets = [Tweet tweetsWithArray:dictionaries];
-        self.isMoreTweetsAvailable = YES;
-    } else {
-        [self refresh];
-    }
-}
-
 #pragma mark UITextFieldDelegate
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    self.charsRemainingLabel.text = [NSString stringWithFormat:@"%ld", kComposeLengthLimit];
+    self.charsRemainingLabel.text = [NSString stringWithFormat:@"%ld", (long)kComposeLengthLimit];
     return YES;
 }
 
@@ -338,7 +305,7 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     NSInteger lengthAfterEdit = textField.text.length + delta;
     NSInteger remainingAfterEdit = kComposeLengthLimit - lengthAfterEdit;
     if (remainingAfterEdit >= 0 && [string rangeOfString:@"\n"].length == 0) {
-        self.charsRemainingLabel.text = [NSString stringWithFormat:@"%ld", remainingAfterEdit];
+        self.charsRemainingLabel.text = [NSString stringWithFormat:@"%ld", (long)remainingAfterEdit];
         return YES;
     } else {
         return NO;

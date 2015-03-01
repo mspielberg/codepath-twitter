@@ -15,6 +15,7 @@
 - (void)mainMenuViewControllerDidSelectHome:(MainMenuViewController *)mainMenuViewController;
 - (void)mainMenuViewControllerDidSelectMyProfile:(MainMenuViewController *)mainMenuViewController;
 - (void)mainMenuViewControllerDidSelectMentions:(MainMenuViewController *)mainMenuViewController;
+- (void)mainMenuViewControllerDidSelectLogout:(MainMenuViewController *)mainMenuViewController;
 
 @end
 

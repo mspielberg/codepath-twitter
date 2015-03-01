@@ -44,6 +44,7 @@
 		91A88D931AA2B9990088CCC2 /* UIImage+Crop.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A88D921AA2B9990088CCC2 /* UIImage+Crop.m */; };
 		91A88D951AA2BF000088CCC2 /* mentions.svg in Resources */ = {isa = PBXBuildFile; fileRef = 91A88D941AA2BF000088CCC2 /* mentions.svg */; };
 		91A88D971AA2C3250088CCC2 /* door.svg in Resources */ = {isa = PBXBuildFile; fileRef = 91A88D961AA2C3250088CCC2 /* door.svg */; };
+		91A88D991AA2CA900088CCC2 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91A88D981AA2CA900088CCC2 /* MainViewController.xib */; };
 		F6C4BED2AF57D79EB3C0274D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43A890C12FE260E6CA8B32C4 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -117,6 +118,7 @@
 		91A88D921AA2B9990088CCC2 /* UIImage+Crop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Crop.m"; sourceTree = "<group>"; };
 		91A88D941AA2BF000088CCC2 /* mentions.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mentions.svg; sourceTree = "<group>"; };
 		91A88D961AA2C3250088CCC2 /* door.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = door.svg; sourceTree = "<group>"; };
+		91A88D981AA2CA900088CCC2 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		F506FACC87C7A68F174E3D62 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -235,6 +237,7 @@
 				91A88D801AA251A50088CCC2 /* MainMenuViewController.xib */,
 				91A88D8A1AA256940088CCC2 /* MainViewController.h */,
 				91A88D8B1AA256940088CCC2 /* MainViewController.m */,
+				91A88D981AA2CA900088CCC2 /* MainViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				913E18361AA23C29007992D4 /* UserDetailViewController.xib in Resources */,
 				91A88D951AA2BF000088CCC2 /* mentions.svg in Resources */,
 				913E777F1A98233C0071674A /* TweetDetailViewController.xib in Resources */,
+				91A88D991AA2CA900088CCC2 /* MainViewController.xib in Resources */,
 				913E772A1A941D020071674A /* LaunchScreen.xib in Resources */,
 				91A88D891AA254830088CCC2 /* home.svg in Resources */,
 				913E77761A981FD20071674A /* retweet_on.png in Resources */,
