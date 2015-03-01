@@ -16,6 +16,7 @@
 - (void)tweetCell:(TweetCell *)tweetCell shouldReplyToTweet:(Tweet *)tweet;
 - (void)tweetCell:(TweetCell *)tweetCell shouldSetFavorite:(BOOL)favorite ofTweet:(Tweet *)tweet;
 - (void)tweetCell:(TweetCell *)tweetCell shouldRetweetTweet:(Tweet *)tweet;
+- (void)tweetCell:(TweetCell *)tweetCell shouldShouldUserProfile:(Tweet *)tweet;
 
 @end
 

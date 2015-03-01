@@ -88,4 +88,5 @@ NSInteger const kOneDay = kOneHour * 24;
              @"retweet_count": @(self.retweetCount)
              };
 }
+
 @end

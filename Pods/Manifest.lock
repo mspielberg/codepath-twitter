@@ -23,13 +23,19 @@ PODS:
   - BDBOAuth1Manager (1.5.0):
     - AFNetworking/NSURLConnection (~> 2.5.0)
     - AFNetworking/NSURLSession (~> 2.5.0)
+  - RaptureXML (1.0.1)
+  - UIImage+SVG (0.1):
+    - RaptureXML (~> 1.0.1)
 
 DEPENDENCIES:
   - AFNetworking
   - BDBOAuth1Manager
+  - UIImage+SVG
 
 SPEC CHECKSUMS:
   AFNetworking: 8bee59492a6ff15d69130efa4d0dc67e0094a52a
   BDBOAuth1Manager: 274574557077abc873fc5688abe8b991e782749c
+  RaptureXML: b9b0aca9c68c684c189af73dd5e8f8fdeec74600
+  UIImage+SVG: cd2c1069ca2c6ee2b5eceb2fe983821ef62b9106
 
 COCOAPODS: 0.35.0

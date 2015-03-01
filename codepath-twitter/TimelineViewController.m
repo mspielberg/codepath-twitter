@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "TimelineViewController.h"
 #import "TweetDetailViewController.h"
+#import "UserDetailViewController.h"
 #import "TwitterClient.h"
 #import "TweetCell.h"
 #import "Tweet.h"
@@ -84,16 +85,6 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (void)onDidLogin {
     [self refresh];
@@ -193,16 +184,21 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 - (void)loadMoreData {
     Tweet *lastTweet = self.tweets.lastObject;
     NSNumber *lastTweetId = lastTweet.tweetId;
-    [[TwitterClient sharedInstance] homeTimelineFromStartId:lastTweetId completion:^(NSArray *tweets, NSError *error) {
-        if (tweets && tweets.count > 0) {
-            self.isMoreTweetsAvailable = YES;
-            self.tweets = [self.tweets arrayByAddingObjectsFromArray:tweets];
-            [self saveTweetsToUserDefaults];
-            [self.tableView reloadData];
-        } else {
-            self.isMoreTweetsAvailable = NO;
-        }
-    }];
+    
+    if (self.timelineFetchBlock) {
+        void(^completion)(NSArray *tweets, NSError *error) = ^(NSArray *tweets, NSError *error) {
+            if (tweets && tweets.count > 0) {
+                self.isMoreTweetsAvailable = YES;
+                self.tweets = [self.tweets arrayByAddingObjectsFromArray:tweets];
+                [self saveTweetsToUserDefaults];
+                [self.tableView reloadData];
+            } else {
+                self.isMoreTweetsAvailable = NO;
+            }
+        };
+    
+        self.timelineFetchBlock(lastTweetId, completion);
+    }
 }
 
 - (void)setTweet:(Tweet *)tweet asFavorite:(BOOL)favorite {
@@ -244,6 +240,13 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     }
 }
 
+#pragma mark timelineFetchBlock
+
+- (void)setTimelineFetchBlock:(TimelineFetchBlock)timelineFetchBlock {
+    _timelineFetchBlock = timelineFetchBlock;
+    [self refresh];
+}
+
 #pragma mark UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -255,9 +258,8 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
     CGFloat expectedHeight = [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
     NSLog(@"expected cell for row %ld to have height %f", indexPath.row, expectedHeight);
     Tweet *tweet = self.tweets[indexPath.row];
-    TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
+    TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell" forIndexPath:indexPath];
     NSLog(@"Dequeued cell %@ for row %ld with height %f", cell, indexPath.row, cell.frame.size.height);
-    cell.frame = CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), expectedHeight);
     cell.delegate = self;
     cell.tweet = tweet;
     [self.sizingCell setNeedsLayout];
@@ -282,8 +284,8 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 //    frame.size.width = self.tableView.frame.size.width;
 //    self.sizingCell.frame = CGRectMake(0, 0, 250, 1024);
     CGFloat tableWidth = CGRectGetWidth(self.tableView.frame);
-//    self.sizingCell.frame = self.tableView.frame;
-    self.sizingCell.frame = CGRectMake(0, 0, tableWidth, 1024);
+    self.sizingCell.frame = self.tableView.frame;
+//    self.sizingCell.frame = CGRectMake(0, 0, tableWidth, 1024);
     self.sizingCell.tweet = tweet;
     
 //    NSLog(@"Sizing row %ld with tweet %@", indexPath.row, self.sizingCell.tweet);
@@ -293,7 +295,7 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 //    NSLog(@"sizingCell layout size = %@", self.sizingCell);
     CGFloat desiredHeight = [self.sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
     NSLog(@"Calculated height %f for row %ld", desiredHeight, indexPath.row);
-    return desiredHeight + 1.5;
+    return desiredHeight + 5;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -357,6 +359,13 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 
 - (void)tweetCell:(TweetCell *)tweetCell shouldSetFavorite:(BOOL)favorite ofTweet:(Tweet *)tweet {
     [self setTweet:tweet asFavorite:favorite];
+}
+
+- (void)tweetCell:(TweetCell *)tweetCell shouldShouldUserProfile:(Tweet *)tweet {
+    UserDetailViewController *udvc = [[UserDetailViewController alloc] init];
+    Tweet *originalTweet = tweet.originalTweet ? tweet.originalTweet : tweet;
+    udvc.user = originalTweet.user;
+    [self.navigationController pushViewController:udvc animated:YES];
 }
 
 #pragma mark TweetDetailViewControllerDelegate

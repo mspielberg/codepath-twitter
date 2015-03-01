@@ -7,6 +7,7 @@
 //
 
 #import "TweetDetailViewController.h"
+#import "UserDetailViewController.h"
 #import "UIImageView+AnimationUtils.h"
 #import "TwitterClient.h"
 
@@ -147,6 +148,15 @@
 - (IBAction)onRetweet:(id)sender {
     NSLog(@"onRetweet");
     [self.delegate tweetDetailViewController:self shouldRetweetTweet:self.tweet];
+}
+
+#pragma mark TapGestureRecognizer
+
+- (IBAction)onUserInfoTap:(UITapGestureRecognizer *)sender {
+    UserDetailViewController *udvc = [[UserDetailViewController alloc] init];
+    Tweet *originalTweet = self.tweet.originalTweet ? self.tweet.originalTweet : self.tweet;
+    udvc.user = originalTweet.user;
+    [self.navigationController pushViewController:udvc animated:YES];
 }
 
 @end

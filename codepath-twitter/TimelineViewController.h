@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^TimelineFetchBlock)(NSNumber *startId, void (^completion)(NSArray *tweets, NSError *error));
+
 @interface TimelineViewController : UIViewController
+
+@property (strong, nonatomic) TimelineFetchBlock timelineFetchBlock;
 
 @end

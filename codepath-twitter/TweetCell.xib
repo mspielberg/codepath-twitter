@@ -16,32 +16,35 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7fJ-zw-ayO" userLabel="Tweet View">
                         <rect key="frame" x="8" y="28" width="383" height="62"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ken-Bw-tJo">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ken-Bw-tJo">
                                 <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="2F3-gu-TJB"/>
                                     <constraint firstAttribute="height" constant="48" id="nan-Sk-ZEj"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="900" verticalHuggingPriority="900" text="User's Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSa-WP-bCN">
-                                <rect key="frame" x="56" y="0.0" width="73" height="15"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="900" verticalHuggingPriority="900" text="User's Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSa-WP-bCN">
+                                <rect key="frame" x="56" y="0.0" width="72.5" height="14.5"/>
+                                <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="900" verticalHuggingPriority="900" text="@screen_name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pka-ZP-H4c">
-                                <rect key="frame" x="56" y="15" width="84" height="15"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="900" verticalHuggingPriority="900" text="@screen_name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pka-ZP-H4c">
+                                <rect key="frame" x="56" y="14" width="84" height="14.5"/>
+                                <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4h ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2uC-CI-8rn">
-                                <rect key="frame" x="345" y="0.0" width="39" height="15"/>
+                                <rect key="frame" x="344" y="0.0" width="38.5" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="800" verticalHuggingPriority="800" text="Text of a tweet can be fairly long and flow across lines, for ever and ever, and ever, and ever." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LEC-gC-KIy">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Text of a tweet can be fairly long and flow across lines, for ever and ever, and ever, and ever." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LEC-gC-KIy">
                                 <rect key="frame" x="56" y="33" width="327" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -158,7 +161,6 @@
                     <constraint firstItem="7fJ-zw-ayO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="1Ge-ck-OjS"/>
                     <constraint firstItem="X9g-fP-wpS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="54A-Vw-5TB"/>
                     <constraint firstAttribute="trailing" secondItem="7fJ-zw-ayO" secondAttribute="trailing" constant="8" id="8CC-Ei-Ipv"/>
-                    <constraint firstItem="7fJ-zw-ayO" firstAttribute="top" secondItem="X9g-fP-wpS" secondAttribute="bottom" constant="8" id="8uR-hc-oZS"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="zbD-pR-szO" secondAttribute="bottom" constant="8" id="DM5-jT-uYK"/>
                     <constraint firstItem="zbD-pR-szO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="64" id="KVh-Lf-6hW"/>
                     <constraint firstItem="X9g-fP-wpS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="PQP-F7-x2y"/>
@@ -174,7 +176,6 @@
                 <outlet property="retweetButton" destination="9z0-RL-Wge" id="zec-93-0kW"/>
                 <outlet property="retweetLabel" destination="DSU-ks-mrj" id="huZ-ph-21X"/>
                 <outlet property="retweetView" destination="X9g-fP-wpS" id="IYS-BM-veB"/>
-                <outlet property="retweetViewLayoutConstraint" destination="8uR-hc-oZS" id="bOA-Gf-WI8"/>
                 <outlet property="screenNameLabel" destination="pka-ZP-H4c" id="Hx7-6f-Vju"/>
                 <outlet property="timeLabel" destination="2uC-CI-8rn" id="k4E-Ah-5Tq"/>
                 <outlet property="tweetTextLabel" destination="LEC-gC-KIy" id="Zth-AO-81B"/>

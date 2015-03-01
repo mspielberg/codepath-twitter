@@ -13,7 +13,6 @@
 @interface TweetCell ()
 @property (weak, nonatomic) IBOutlet UIView *retweetView;
 @property (weak, nonatomic) IBOutlet UILabel *retweetLabel;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *retweetViewLayoutConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *mainTweetViewLayoutConstraint;
 
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
@@ -32,12 +31,21 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    [self.userImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onUserInfoTap:)]];
+    [self.nameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onUserInfoTap:)]];
+    [self.screenNameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onUserInfoTap:)]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)dealloc {
+    [_tweet removeObserver:self forKeyPath:@"favorited"];
+    [_tweet removeObserver:self forKeyPath:@"retweeted"];
 }
 
 - (void)setTweet:(Tweet *)tweet {
@@ -58,35 +66,37 @@
     if (tweet.originalTweet) {
         self.retweetView.hidden = false;
         self.retweetLabel.text = [NSString stringWithFormat:@"retweeted by @%@", tweet.user.screenName];
+        self.mainTweetViewLayoutConstraint.constant = 28.0;
+
 //        [self.retweetView.superview addConstraint:self.retweetViewLayoutConstraint];
     } else {
         self.retweetView.hidden = true;
+        self.mainTweetViewLayoutConstraint.constant = 8.0;
+
 //        [self.retweetView.superview removeConstraint:self.retweetViewLayoutConstraint];
     }
     [self setNeedsUpdateConstraints];
     [self updateConstraintsIfNeeded];
-    [self setNeedsLayout];
+//    [self setNeedsLayout];
     
     [tweet addObserver:self forKeyPath:@"favorited" options:NSKeyValueObservingOptionInitial context:nil];
     [tweet addObserver:self forKeyPath:@"retweeted" options:NSKeyValueObservingOptionInitial context:nil];
 }
 
 - (void)updateConstraints {
-    [self.retweetView.superview removeConstraints:@[self.retweetViewLayoutConstraint, self.mainTweetViewLayoutConstraint]];
-    if (self.tweet.originalTweet) {
-        [self.retweetView.superview addConstraint:self.retweetViewLayoutConstraint];
-    } else {
-        [self.retweetView.superview addConstraint:self.mainTweetViewLayoutConstraint];
-        self.mainTweetViewLayoutConstraint.constant = 8.0;
-    }
+//    if (self.tweet.originalTweet) {
+//    } else {
+//        [self.retweetView.superview addConstraint:self.mainTweetViewLayoutConstraint];
+//    }
     [super updateConstraints];
+    self.tweetTextLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tweetTextLabel.bounds);
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    [self.contentView layoutIfNeeded];
-    self.tweetTextLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tweetTextLabel.frame);
-}
+//- (void)layoutSubviews {
+////    [self.contentView layoutIfNeeded];
+//    self.tweetTextLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tweetTextLabel.frame);
+//    [super layoutSubviews];
+//}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"favorited"]) {
@@ -114,6 +124,12 @@
 
 - (IBAction)onRetweet:(id)sender {
     [self.delegate tweetCell:self shouldRetweetTweet:self.tweet];
+}
+
+#pragma mark TapGestureRecognizer
+
+- (IBAction)onUserInfoTap:(UITapGestureRecognizer *)sender {
+    [self.delegate tweetCell:self shouldShouldUserProfile:self.tweet];
 }
 
 @end

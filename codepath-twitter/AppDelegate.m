@@ -7,11 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "LoginViewController.h"
-#import "TimelineViewController.h"
+#import "MainViewController.h"
 #import "TwitterClient.h"
-#import "User.h"
-#import "Tweet.h"
 
 @interface AppDelegate ()
 
@@ -24,9 +21,7 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    TimelineViewController *tvc = [[TimelineViewController alloc] init];
-    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:tvc];
-    self.window.rootViewController = nc;
+    self.window.rootViewController = [[MainViewController alloc] init];
     
     [self.window makeKeyAndVisible];
     return YES;
@@ -57,11 +52,6 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     [[TwitterClient sharedInstance] handleOpenUrl:url];
     return YES;
-}
-
-- (void)onDidLogout {
-    LoginViewController *lvc = [[LoginViewController alloc] init];
-    self.window.rootViewController = lvc;    
 }
 
 @end

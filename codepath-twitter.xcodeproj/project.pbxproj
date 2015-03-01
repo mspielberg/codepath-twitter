@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		913E18301AA1902F007992D4 /* UnderlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 913E182E1AA1902F007992D4 /* UnderlayViewController.m */; };
+		913E18311AA1902F007992D4 /* UnderlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913E182F1AA1902F007992D4 /* UnderlayViewController.xib */; };
+		913E18351AA23C29007992D4 /* UserDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 913E18331AA23C29007992D4 /* UserDetailViewController.m */; };
+		913E18361AA23C29007992D4 /* UserDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913E18341AA23C29007992D4 /* UserDetailViewController.xib */; };
 		913E771C1A941D020071674A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 913E771B1A941D020071674A /* main.m */; };
 		913E771F1A941D020071674A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 913E771E1A941D020071674A /* AppDelegate.m */; };
 		913E77271A941D020071674A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 913E77261A941D020071674A /* Images.xcassets */; };
@@ -31,6 +35,11 @@
 		913E777A1A981FD20071674A /* favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 913E77751A981FD20071674A /* favorite.png */; };
 		913E777E1A98233C0071674A /* TweetDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 913E777C1A98233C0071674A /* TweetDetailViewController.m */; };
 		913E777F1A98233C0071674A /* TweetDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 913E777D1A98233C0071674A /* TweetDetailViewController.xib */; };
+		91A88D811AA251A50088CCC2 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A88D7F1AA251A50088CCC2 /* MainMenuViewController.m */; };
+		91A88D821AA251A50088CCC2 /* MainMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91A88D801AA251A50088CCC2 /* MainMenuViewController.xib */; };
+		91A88D891AA254830088CCC2 /* home.svg in Resources */ = {isa = PBXBuildFile; fileRef = 91A88D881AA254830088CCC2 /* home.svg */; };
+		91A88D8C1AA256940088CCC2 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A88D8B1AA256940088CCC2 /* MainViewController.m */; };
+		91A88D8E1AA2619F0088CCC2 /* menu.svg in Resources */ = {isa = PBXBuildFile; fileRef = 91A88D8D1AA2619F0088CCC2 /* menu.svg */; };
 		F6C4BED2AF57D79EB3C0274D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43A890C12FE260E6CA8B32C4 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +56,12 @@
 /* Begin PBXFileReference section */
 		43A890C12FE260E6CA8B32C4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		86C61197553B49D25D5E090F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		913E182D1AA1902F007992D4 /* UnderlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnderlayViewController.h; sourceTree = "<group>"; };
+		913E182E1AA1902F007992D4 /* UnderlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnderlayViewController.m; sourceTree = "<group>"; };
+		913E182F1AA1902F007992D4 /* UnderlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnderlayViewController.xib; sourceTree = "<group>"; };
+		913E18321AA23C29007992D4 /* UserDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailViewController.h; sourceTree = "<group>"; };
+		913E18331AA23C29007992D4 /* UserDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailViewController.m; sourceTree = "<group>"; };
+		913E18341AA23C29007992D4 /* UserDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDetailViewController.xib; sourceTree = "<group>"; };
 		913E77161A941D020071674A /* codepath-twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "codepath-twitter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		913E771A1A941D020071674A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		913E771B1A941D020071674A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -86,6 +101,13 @@
 		913E777B1A98233C0071674A /* TweetDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailViewController.h; sourceTree = "<group>"; };
 		913E777C1A98233C0071674A /* TweetDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailViewController.m; sourceTree = "<group>"; };
 		913E777D1A98233C0071674A /* TweetDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetDetailViewController.xib; sourceTree = "<group>"; };
+		91A88D7E1AA251A50088CCC2 /* MainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
+		91A88D7F1AA251A50088CCC2 /* MainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuViewController.m; sourceTree = "<group>"; };
+		91A88D801AA251A50088CCC2 /* MainMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuViewController.xib; sourceTree = "<group>"; };
+		91A88D881AA254830088CCC2 /* home.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = home.svg; sourceTree = "<group>"; };
+		91A88D8A1AA256940088CCC2 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		91A88D8B1AA256940088CCC2 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		91A88D8D1AA2619F0088CCC2 /* menu.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = menu.svg; sourceTree = "<group>"; };
 		F506FACC87C7A68F174E3D62 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -193,6 +215,17 @@
 				913E777B1A98233C0071674A /* TweetDetailViewController.h */,
 				913E777C1A98233C0071674A /* TweetDetailViewController.m */,
 				913E777D1A98233C0071674A /* TweetDetailViewController.xib */,
+				913E182D1AA1902F007992D4 /* UnderlayViewController.h */,
+				913E182E1AA1902F007992D4 /* UnderlayViewController.m */,
+				913E182F1AA1902F007992D4 /* UnderlayViewController.xib */,
+				913E18321AA23C29007992D4 /* UserDetailViewController.h */,
+				913E18331AA23C29007992D4 /* UserDetailViewController.m */,
+				913E18341AA23C29007992D4 /* UserDetailViewController.xib */,
+				91A88D7E1AA251A50088CCC2 /* MainMenuViewController.h */,
+				91A88D7F1AA251A50088CCC2 /* MainMenuViewController.m */,
+				91A88D801AA251A50088CCC2 /* MainMenuViewController.xib */,
+				91A88D8A1AA256940088CCC2 /* MainViewController.h */,
+				91A88D8B1AA256940088CCC2 /* MainViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -250,6 +283,8 @@
 		913E77701A981FCC0071674A /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				91A88D8D1AA2619F0088CCC2 /* menu.svg */,
+				91A88D881AA254830088CCC2 /* home.svg */,
 				913E77711A981FD20071674A /* retweet_on.png */,
 				913E77721A981FD20071674A /* favorite_on.png */,
 				913E77731A981FD20071674A /* retweet.png */,
@@ -350,16 +385,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91A88D821AA251A50088CCC2 /* MainMenuViewController.xib in Resources */,
 				913E77771A981FD20071674A /* favorite_on.png in Resources */,
 				913E777A1A981FD20071674A /* favorite.png in Resources */,
 				913E77791A981FD20071674A /* reply.png in Resources */,
+				913E18361AA23C29007992D4 /* UserDetailViewController.xib in Resources */,
 				913E777F1A98233C0071674A /* TweetDetailViewController.xib in Resources */,
 				913E772A1A941D020071674A /* LaunchScreen.xib in Resources */,
+				91A88D891AA254830088CCC2 /* home.svg in Resources */,
 				913E77761A981FD20071674A /* retweet_on.png in Resources */,
 				913E775E1A9524990071674A /* TweetCell.xib in Resources */,
 				913E77581A951F9A0071674A /* TimelineViewController.xib in Resources */,
+				91A88D8E1AA2619F0088CCC2 /* menu.svg in Resources */,
 				913E77271A941D020071674A /* Images.xcassets in Resources */,
 				913E77781A981FD20071674A /* retweet.png in Resources */,
+				913E18311AA1902F007992D4 /* UnderlayViewController.xib in Resources */,
 				913E77441A9421580071674A /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -414,10 +454,14 @@
 				913E775D1A9524990071674A /* TweetCell.m in Sources */,
 				913E77481A9422510071674A /* TwitterClient.m in Sources */,
 				913E77571A951F9A0071674A /* TimelineViewController.m in Sources */,
+				91A88D8C1AA256940088CCC2 /* MainViewController.m in Sources */,
 				913E77611A95268D0071674A /* UIImageView+AnimationUtils.m in Sources */,
+				91A88D811AA251A50088CCC2 /* MainMenuViewController.m in Sources */,
 				913E776D1A96DA9A0071674A /* LimitedWidthTextField.m in Sources */,
 				913E777E1A98233C0071674A /* TweetDetailViewController.m in Sources */,
 				913E771F1A941D020071674A /* AppDelegate.m in Sources */,
+				913E18301AA1902F007992D4 /* UnderlayViewController.m in Sources */,
+				913E18351AA23C29007992D4 /* UserDetailViewController.m in Sources */,
 				913E774F1A9429AF0071674A /* User.m in Sources */,
 				913E774C1A9429970071674A /* Tweet.m in Sources */,
 				913E771C1A941D020071674A /* main.m in Sources */,

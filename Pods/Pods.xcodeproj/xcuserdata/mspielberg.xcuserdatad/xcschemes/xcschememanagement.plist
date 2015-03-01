@@ -14,6 +14,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-RaptureXML.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-UIImage+SVG.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +32,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>20B19D075AE1105D95963034</key>
+		<key>21D3B6683AF32128B6D5967B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>29FC706FA11DABEB24423499</key>
+		<key>3B85361343608B5BBF91F20C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>579849C94F739406508E900D</key>
+		<key>8280C8D0D618A1DC4B48929C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AC1BFADF87D9FECD0960F67A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C92AD1AE40F127C061D1EF3D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

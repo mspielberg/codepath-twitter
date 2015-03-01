@@ -21,6 +21,7 @@ typedef ORNLoginCompletion(^ORNAuthURLCompletion)(NSURL *authURL, NSError *error
 - (void)loginWithCompletion:(void(^)(User *user, NSError *error))completion;
 - (void)handleOpenUrl:(NSURL *)url;
 - (void)homeTimelineFromStartId:(NSNumber *)startId completion:(void(^)(NSArray *tweets, NSError *error))completion;
+- (void)mentionsTimelineFromStartId:(NSNumber *)startId completion:(void(^)(NSArray *tweets, NSError *error))completion;
 - (void)updateStatus:(NSString *)status asReplyToTweetId:(NSNumber *)tweetId withCompletion:(void (^)(Tweet *tweet, NSError *error))completion;
 - (void)setAsFavorite:(BOOL)isFavorite withId:(NSNumber *)tweetId;
 - (void)retweet:(NSNumber *)tweetId;

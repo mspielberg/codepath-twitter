@@ -92,24 +92,29 @@ NSString *const kTwitterBaseUrl = @"https://api.twitter.com";
     }
 }
 
-- (void)homeTimelineFromStartId:(NSNumber *)startId completion:(void(^)(NSArray *tweets, NSError *error))completion {
+- (void)timeline:(NSString *)timeline fromStartId:(NSNumber *)startId completion:(void(^)(NSArray *tweets, NSError *error))completion {
     NSDictionary *parameters;
     if (startId) {
         parameters = [NSDictionary dictionaryWithObject:@([startId integerValue] - 1) forKey:@"max_id"];
     }
-    NSLog(@"Sending home_timeline request with parameters: %@", parameters);
-    [self GET:@"1.1/statuses/home_timeline.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"home timeline: %@", responseObject);
-        Tweet *lastTweet = [[Tweet alloc] initWithDictionary:responseObject[0]];
-        NSLog(@"last tweet = %@", lastTweet);
+    NSString *endpoint = [NSString stringWithFormat:@"1.1/statuses/%@_timeline.json", timeline];
+    NSLog(@"Sending request to %@ with parameters: %@", endpoint, parameters);
+    [self GET:endpoint parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSArray *allTweets = [Tweet tweetsWithArray:responseObject];
-        NSLog(@"all tweets = %@", allTweets);
         completion(allTweets, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"failed to fetch home timeline");
+        NSLog(@"failed to fetch timeline");
         NSLog(@"error = %@", error);
         completion(nil, error);
     }];
+}
+
+- (void)homeTimelineFromStartId:(NSNumber *)startId completion:(void(^)(NSArray *tweets, NSError *error))completion {
+    [self timeline:@"home" fromStartId:startId completion:completion];
+}
+
+- (void)mentionsTimelineFromStartId:(NSNumber *)startId completion:(void(^)(NSArray *tweets, NSError *error))completion {
+    [self timeline:@"mentions" fromStartId:startId completion:completion];
 }
 
 - (void)updateStatus:(NSString *)status asReplyToTweetId:(NSNumber *)tweetId withCompletion:(void (^)(Tweet *tweet, NSError *error))completion {
