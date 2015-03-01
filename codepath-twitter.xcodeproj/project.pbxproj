@@ -40,6 +40,10 @@
 		91A88D891AA254830088CCC2 /* home.svg in Resources */ = {isa = PBXBuildFile; fileRef = 91A88D881AA254830088CCC2 /* home.svg */; };
 		91A88D8C1AA256940088CCC2 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A88D8B1AA256940088CCC2 /* MainViewController.m */; };
 		91A88D8E1AA2619F0088CCC2 /* menu.svg in Resources */ = {isa = PBXBuildFile; fileRef = 91A88D8D1AA2619F0088CCC2 /* menu.svg */; };
+		91A88D901AA2B8880088CCC2 /* person.svg in Resources */ = {isa = PBXBuildFile; fileRef = 91A88D8F1AA2B8880088CCC2 /* person.svg */; };
+		91A88D931AA2B9990088CCC2 /* UIImage+Crop.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A88D921AA2B9990088CCC2 /* UIImage+Crop.m */; };
+		91A88D951AA2BF000088CCC2 /* mentions.svg in Resources */ = {isa = PBXBuildFile; fileRef = 91A88D941AA2BF000088CCC2 /* mentions.svg */; };
+		91A88D971AA2C3250088CCC2 /* door.svg in Resources */ = {isa = PBXBuildFile; fileRef = 91A88D961AA2C3250088CCC2 /* door.svg */; };
 		F6C4BED2AF57D79EB3C0274D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43A890C12FE260E6CA8B32C4 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -108,6 +112,11 @@
 		91A88D8A1AA256940088CCC2 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		91A88D8B1AA256940088CCC2 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		91A88D8D1AA2619F0088CCC2 /* menu.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = menu.svg; sourceTree = "<group>"; };
+		91A88D8F1AA2B8880088CCC2 /* person.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = person.svg; sourceTree = "<group>"; };
+		91A88D911AA2B9990088CCC2 /* UIImage+Crop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Crop.h"; sourceTree = "<group>"; };
+		91A88D921AA2B9990088CCC2 /* UIImage+Crop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Crop.m"; sourceTree = "<group>"; };
+		91A88D941AA2BF000088CCC2 /* mentions.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mentions.svg; sourceTree = "<group>"; };
+		91A88D961AA2C3250088CCC2 /* door.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = door.svg; sourceTree = "<group>"; };
 		F506FACC87C7A68F174E3D62 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -253,6 +262,8 @@
 		913E77501A9430FB0071674A /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				91A88D911AA2B9990088CCC2 /* UIImage+Crop.h */,
+				91A88D921AA2B9990088CCC2 /* UIImage+Crop.m */,
 				913E775F1A95268D0071674A /* UIImageView+AnimationUtils.h */,
 				913E77601A95268D0071674A /* UIImageView+AnimationUtils.m */,
 				913E77511A9431070071674A /* NSArray+ArrayOps.h */,
@@ -283,9 +294,12 @@
 		913E77701A981FCC0071674A /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				91A88D941AA2BF000088CCC2 /* mentions.svg */,
 				91A88D8D1AA2619F0088CCC2 /* menu.svg */,
 				91A88D881AA254830088CCC2 /* home.svg */,
+				91A88D961AA2C3250088CCC2 /* door.svg */,
 				913E77711A981FD20071674A /* retweet_on.png */,
+				91A88D8F1AA2B8880088CCC2 /* person.svg */,
 				913E77721A981FD20071674A /* favorite_on.png */,
 				913E77731A981FD20071674A /* retweet.png */,
 				913E77741A981FD20071674A /* reply.png */,
@@ -390,13 +404,16 @@
 				913E777A1A981FD20071674A /* favorite.png in Resources */,
 				913E77791A981FD20071674A /* reply.png in Resources */,
 				913E18361AA23C29007992D4 /* UserDetailViewController.xib in Resources */,
+				91A88D951AA2BF000088CCC2 /* mentions.svg in Resources */,
 				913E777F1A98233C0071674A /* TweetDetailViewController.xib in Resources */,
 				913E772A1A941D020071674A /* LaunchScreen.xib in Resources */,
 				91A88D891AA254830088CCC2 /* home.svg in Resources */,
 				913E77761A981FD20071674A /* retweet_on.png in Resources */,
 				913E775E1A9524990071674A /* TweetCell.xib in Resources */,
 				913E77581A951F9A0071674A /* TimelineViewController.xib in Resources */,
+				91A88D971AA2C3250088CCC2 /* door.svg in Resources */,
 				91A88D8E1AA2619F0088CCC2 /* menu.svg in Resources */,
+				91A88D901AA2B8880088CCC2 /* person.svg in Resources */,
 				913E77271A941D020071674A /* Images.xcassets in Resources */,
 				913E77781A981FD20071674A /* retweet.png in Resources */,
 				913E18311AA1902F007992D4 /* UnderlayViewController.xib in Resources */,
@@ -464,6 +481,7 @@
 				913E18351AA23C29007992D4 /* UserDetailViewController.m in Sources */,
 				913E774F1A9429AF0071674A /* User.m in Sources */,
 				913E774C1A9429970071674A /* Tweet.m in Sources */,
+				91A88D931AA2B9990088CCC2 /* UIImage+Crop.m in Sources */,
 				913E771C1A941D020071674A /* main.m in Sources */,
 				913E77531A9431070071674A /* NSArray+ArrayOps.m in Sources */,
 				913E77431A9421580071674A /* LoginViewController.m in Sources */,

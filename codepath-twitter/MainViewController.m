@@ -31,7 +31,6 @@
         UINavigationController *leftNav = [[UINavigationController alloc] initWithRootViewController:mmvc];
         
         self.timelineViewController = [[TimelineViewController alloc] init];
-        [self showHomeTimeline];
 
         self.timelineNavigationController = [[UINavigationController alloc] initWithRootViewController:self.timelineViewController];
         
@@ -46,6 +45,8 @@
         uvc.view.frame = self.view.frame;
         [self.view addSubview:uvc.view];
         [uvc didMoveToParentViewController:self];
+        
+        [self showHomeTimeline];
     }
     return self;
 }
