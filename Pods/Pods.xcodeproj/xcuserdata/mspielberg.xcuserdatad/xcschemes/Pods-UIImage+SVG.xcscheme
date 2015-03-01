@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C92AD1AE40F127C061D1EF3D"
+               BlueprintIdentifier = "69F9749397E27C45FED5D938"
                BuildableName = "libPods-UIImage+SVG.a"
                BlueprintName = "Pods-UIImage+SVG"
                ReferencedContainer = "container:Pods.xcodeproj">

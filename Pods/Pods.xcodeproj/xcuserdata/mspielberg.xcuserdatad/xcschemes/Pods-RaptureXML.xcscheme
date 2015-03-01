@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AC1BFADF87D9FECD0960F67A"
+               BlueprintIdentifier = "20B05CAB7566C4E73D8EE98C"
                BuildableName = "libPods-RaptureXML.a"
                BlueprintName = "Pods-RaptureXML"
                ReferencedContainer = "container:Pods.xcodeproj">
