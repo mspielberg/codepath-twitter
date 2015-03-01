@@ -122,7 +122,7 @@ static NSString * const UserDefaultsTweetsKey = @"UserDefaultsTweetsKey";
 
     NSArray *oldTweets = self.tweets;
     self.tweets = [@[newTweet] arrayByAddingObjectsFromArray:oldTweets];
-    [self.tableView reloadData];
+    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationTop];
     
     [[TwitterClient sharedInstance] updateStatus:newTweet.text asReplyToTweetId:self.replyToTweetId withCompletion:^(Tweet *tweet, NSError *error) {
         if (tweet) {

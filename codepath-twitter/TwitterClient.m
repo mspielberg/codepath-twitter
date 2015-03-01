@@ -43,21 +43,6 @@ NSString *const kTwitterBaseUrl = @"https://api.twitter.com";
     }];
 }
 
-- (void)loginWithCompletion:(void(^)(User *user, NSError *error))completion {
-    self.loginCompletion = completion;
-    
-    [self.requestSerializer removeAccessToken];
-    
-    [self fetchRequestTokenWithPath:@"oauth/request_token" method:@"GET" callbackURL:[NSURL URLWithString:@"cptwitterdemo://oauth"] scope:nil success:^(BDBOAuth1Credential *requestToken) {
-        NSLog(@"got request token");
-        NSURL *authURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/oauth/authorize?oauth_token=%@", requestToken.token]];
-        [[UIApplication sharedApplication] openURL:authURL];
-    } failure:^(NSError *error) {
-        NSLog(@"could not get request token");
-        self.loginCompletion(nil, error);
-    }];
-}
-
 - (void)handleOpenUrl:(NSURL *)url {
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
     if ([components.queryItems filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSURLQueryItem *queryItem, NSDictionary *bindings) {
@@ -95,7 +80,7 @@ NSString *const kTwitterBaseUrl = @"https://api.twitter.com";
 - (void)timeline:(NSString *)timeline fromStartId:(NSNumber *)startId completion:(void(^)(NSArray *tweets, NSError *error))completion {
     NSDictionary *parameters;
     if (startId) {
-        parameters = [NSDictionary dictionaryWithObject:@([startId integerValue] - 1) forKey:@"max_id"];
+        parameters = [NSDictionary dictionaryWithObject:@([startId longLongValue] - 1LL) forKey:@"max_id"];
     }
     NSString *endpoint = [NSString stringWithFormat:@"1.1/statuses/%@_timeline.json", timeline];
     NSLog(@"Sending request to %@ with parameters: %@", endpoint, parameters);

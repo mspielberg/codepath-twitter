@@ -24,13 +24,6 @@
 
 @implementation MainViewController
 
-//- (MainViewController *)init {
-//    self = [super init];
-//    if (self) {
-//    }
-//    return self;
-//}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -110,7 +103,7 @@
     NSLog(@"Selected My Profile");
     UserDetailViewController *udvc = [[UserDetailViewController alloc] init];
     udvc.user = [User currentUser];
-    udvc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithSVGNamed:@"menu" targetSize:CGSizeMake(32, 32) fillColor:[UIColor blackColor]] style:UIBarButtonItemStylePlain  target:self action:@selector(onShowMenu)];
+    udvc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithSVGNamed:@"menu" targetSize:CGSizeMake(32, 32) fillColor:[UIColor blackColor]] style:UIBarButtonItemStylePlain target:self action:@selector(onShowMenu)];
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:udvc];
     self.underlayViewController.overlayViewController = nvc;
     [self.underlayViewController snapLeftAnimated:YES];

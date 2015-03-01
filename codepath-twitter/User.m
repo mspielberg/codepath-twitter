@@ -78,7 +78,6 @@ NSString *const kCurrentUserKey = @"kCurrentUserKey";
         [[NSNotificationCenter defaultCenter] postNotificationName:UserDidLoginNotification object:nil];
     } else {
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kCurrentUserKey];
-
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

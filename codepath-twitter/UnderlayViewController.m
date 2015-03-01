@@ -54,9 +54,11 @@
             self.panStartX = CGRectGetMinX(self.overlayView.frame);
             [self setSplitX:self.panStartX];
             break;
+            
         case UIGestureRecognizerStateChanged:
             [self setSplitX:self.panStartX + [sender translationInView:self.view].x];
             break;
+            
         case UIGestureRecognizerStateEnded:
             if ([sender velocityInView:self.view].x > 0) {
                 [self snapRightAnimated:YES];
@@ -64,6 +66,7 @@
                 [self snapLeftAnimated:YES];
             }
             break;
+            
         default:
             NSLog(@"Unexpected state %d for UIPanGestureRecognizer", sender.state);
     }
@@ -135,13 +138,9 @@
     UIView *childView = childController.view;
     [view addSubview:childView];
     childView.frame = view.bounds;
+    // ensure that the subview layout is stable, so it is not animated as part of the sliding
+    // of the overlay
     [childView layoutIfNeeded];
-    [view addConstraints:@[
-//                           [NSLayoutConstraint constraintWithItem:childView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0],
-//                           [NSLayoutConstraint constraintWithItem:childView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0],
-//                           [NSLayoutConstraint constraintWithItem:childView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0],
-//                           [NSLayoutConstraint constraintWithItem:childView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.0]
-                           ]];
     [childController didMoveToParentViewController:self];
 }
 
